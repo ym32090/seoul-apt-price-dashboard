@@ -9,6 +9,7 @@ Median table ID must be independently checked in R-ONE statistics code search;
 do not guess it. Set REB_MEDIAN_STATBL_ID when verified.
 """
 import argparse
+import math
 import datetime as dt
 import json
 import os
@@ -26,6 +27,10 @@ SCHEMA = "seoul-apt-price-v1"
 
 
 def parse_page(payload):
+    if not isinstance(payload, dict):
+        raise ValueError("R-ONE JSON 객체 형식이 아닙니다")
+    if payload.get("RESULT"):
+        raise RuntimeError("R-ONE 응답 오류: " + str(payload["RESULT"]))
     blocks = payload.get("SttsApiTblData")
     if not isinstance(blocks, list):
         raise ValueError("R-ONE API 응답 형식이 아닙니다")
@@ -49,6 +54,7 @@ def fetch_pages(api_key, stat_id, start, end, page_size=1000, opener=None):
         raise ValueError("통계표 ID를 공식 사이트에서 확인해주세요")
     op = opener or urllib.request.urlopen
     gathered = []
+    seen_keys = set()
     index = 1
     while True:
         params = {
@@ -82,11 +88,14 @@ def fetch_pages(api_key, stat_id, start, end, page_size=1000, opener=None):
             raise ValueError("조회 결과가 0건입니다. R-ONE 통계표 ID와 지역코드 확인 필요")
         if not rows:
             raise ValueError("페이지에 데이터가 없습니다. API 응답 확인 필요")
+        signature = tuple((str(r.get('WRTTIME_IDTFR_ID')), str(r.get('CLS_ID')), str(r.get('ITM_ID'))) for r in rows)
+        if signature in seen_keys:
+            raise ValueError('API가 동일 페이지를 반복해서 반환했습니다. 인증키/페이지 인자 확인 필요')
+        seen_keys.add(signature)
         gathered.extend(rows)
         if len(gathered) >= total:
             break
-        if len(rows) < page_size:
-            raise ValueError(f"페이지 누락 가능성: {len(gathered)}/{total}건. 샘플 모드 또는 페이지 처리를 확인하세요")
+        # Servers may cap pSize below requested; advance pIndex and verify total/duplicates.
         index += 1
         if index > 20:
             raise ValueError("비정상적인 페이지 수")
@@ -153,7 +162,9 @@ def to_prices(rows, stat_id):
         n = r.get("DTA_VAL")
         if n is None or n == "":
             continue
-        n = float(n)
+        n = float(str(n).replace(',', '').strip())
+        if not math.isfinite(n) or n <= 0:
+            raise ValueError('가격 원본이 양의 유한 숫자가 아닙니다')
         unit = str(r.get("UI_NM", "")).replace(" ", "")
         if unit in ("천원", "천원/호", "천원/호당"):
             v = n / 10
@@ -197,7 +208,7 @@ def build_document(avg, median=None, median_table_id=None):
 def main():
     p = argparse.ArgumentParser(description="한국부동산원 공식 R-ONE 시계열 JSON 갱신")
     p.add_argument("--out", type=Path, default=Path(__file__).resolve().parents[1] / "data/reb.json")
-    p.add_argument("--start", default="2015")
+    p.add_argument("--start", default="2000")
     p.add_argument("--end", default=str(dt.datetime.now().year))
     p.add_argument("--median-stat-id", default=os.environ.get("REB_MEDIAN_STATBL_ID", ""))
     args = p.parse_args()
@@ -212,6 +223,18 @@ def main():
     else:
         print("주의: 중위가격 공식 STATBL_ID를 검증하지 못해 평균값만 갱신합니다")
     document = build_document(avg, med, median_stat_id)
+    # If the same price series is already stored, retain the original updated_at.
+    # A scheduled check must not create an artificial data update merely by running.
+    if args.out.exists():
+        try:
+            previous = json.loads(args.out.read_text(encoding='utf-8'))
+            if (previous.get('source') == 'reb' and previous.get('rows') == document['rows']
+                    and previous.get('statistics') == document['statistics']
+                    and previous.get('verification') == document['verification']):
+                print('공식 자료 변동 없음: 기존 데이터 보존 (추가 커밋 불필요)')
+                return
+        except (ValueError, OSError, TypeError):
+            pass
     args.out.parent.mkdir(parents=True, exist_ok=True)
     tmp = args.out.with_suffix(".tmp")
     tmp.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
