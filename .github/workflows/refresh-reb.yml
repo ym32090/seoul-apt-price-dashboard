@@ -1,1 +1,79 @@
-
+# This file must be at .github/workflows/refresh-reb.yml on the default branch.
+# R-ONE monthly survey is normally published around the 15th of following month.
+# GitHub Actions schedule uses UTC. 07:40 UTC = 16:40 Asia/Seoul.
+# GitHub Pages may REMAIN Settings -> Pages -> Deploy from a branch -> main / root.
+# GITHUB_TOKEN commits do NOT trigger Pages builds, so this workflow explicitly deploys.
+# Explicit deployment is still restricted to the main source branch.
+name: Refresh official REB price series
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '40 7 15-25 * *'
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: reb-data-refresh
+  cancel-in-progress: false
+jobs:
+  refresh-reb:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch validated official R-ONE statistics
+        env:
+          REB_API_KEY: ${{ secrets.REB_API_KEY }}
+          REB_MEDIAN_STATBL_ID: ${{ vars.REB_MEDIAN_STATBL_ID }}
+        run: |
+          if [ -z "$REB_API_KEY" ]; then
+            echo 'ERROR: GitHub Secret REB_API_KEY is not set.' >&2
+            exit 1
+          fi
+          python scripts/update_reb.py --start 2000
+      - name: Run regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Commit updated published data (only if changed)
+        id: commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/reb.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'data: refresh official REB Seoul apartment prices'
+            git push origin HEAD:main
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'No new official data; no commit needed.'
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Prepare public static site
+        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        run: |
+          mkdir -p _site/data
+          cp index.html _site/index.html
+          cp data/reb.json data/kb.json data/import_template.csv _site/data/
+          touch _site/.nojekyll
+      - name: Configure Pages
+        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/configure-pages@v5
+      - name: Upload verified static website
+        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Explicitly deploy website (GITHUB_TOKEN commits do not trigger branch Pages)
+        id: deployment
+        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/deploy-pages@v4
