@@ -7,853 +7,853 @@
   "unit": "만원",
   "origin": "한국부동산원 R-ONE 전국주택가격동향조사(월간)",
   "source_url": "https://www.reb.or.kr/r-one/portal/stat/easyStatPage/A_2024_00060.do",
-  "updated_at": "2026-11-13T06:32:19+00:00",
-  "verification": "R_ONE_OFFICIAL_API_AVERAGE_ONLY_MEDIAN_UNCONFIRMED",
+  "updated_at": "2026-11-13T09:10:58+00:00",
+  "verification": "R_ONE_OFFICIAL_API_KEY_AUTHENTICATED",
   "statistics": {
     "avg_table_id": "A_2024_00060",
-    "median_table_id": null,
+    "median_table_id": "A_2024_00062",
     "seoul_cls_id": "500008"
   },
   "rows": [
     {
       "month": "2012-01",
       "avg": 54095.4,
-      "median": null
+      "median": 49411.2
     },
     {
       "month": "2012-02",
       "avg": 53887.6,
-      "median": null
+      "median": 49251.0
     },
     {
       "month": "2012-03",
       "avg": 53607.9,
-      "median": null
+      "median": 49150.8
     },
     {
       "month": "2012-04",
       "avg": 53240.9,
-      "median": null
+      "median": 48787.4
     },
     {
       "month": "2012-05",
       "avg": 52973.3,
-      "median": null
+      "median": 48298.8
     },
     {
       "month": "2012-06",
       "avg": 52513.1,
-      "median": null
+      "median": 47710.3
     },
     {
       "month": "2012-07",
       "avg": 52112.3,
-      "median": null
+      "median": 47440.5
     },
     {
       "month": "2012-08",
       "avg": 51584.6,
-      "median": null
+      "median": 46994.7
     },
     {
       "month": "2012-09",
       "avg": 51182.3,
-      "median": null
+      "median": 46486.6
     },
     {
       "month": "2012-10",
       "avg": 50821.7,
-      "median": null
+      "median": 46218.7
     },
     {
       "month": "2012-11",
       "avg": 50549.4,
-      "median": null
+      "median": 45878.6
     },
     {
       "month": "2012-12",
       "avg": 49990.0,
-      "median": null
+      "median": 45539.6
     },
     {
       "month": "2013-01",
       "avg": 49618.0,
-      "median": null
+      "median": 45377.5
     },
     {
       "month": "2013-02",
       "avg": 49416.8,
-      "median": null
+      "median": 45121.1
     },
     {
       "month": "2013-03",
       "avg": 49367.5,
-      "median": null
+      "median": 45077.5
     },
     {
       "month": "2013-04",
       "avg": 49449.2,
-      "median": null
+      "median": 45355.0
     },
     {
       "month": "2013-05",
       "avg": 49551.1,
-      "median": null
+      "median": 45497.8
     },
     {
       "month": "2013-06",
       "avg": 49390.8,
-      "median": null
+      "median": 45318.0
     },
     {
       "month": "2013-07",
       "avg": 49068.2,
-      "median": null
+      "median": 45113.7
     },
     {
       "month": "2013-08",
       "avg": 48811.6,
-      "median": null
+      "median": 44993.1
     },
     {
       "month": "2013-09",
       "avg": 48842.8,
-      "median": null
+      "median": 45008.5
     },
     {
       "month": "2013-10",
       "avg": 49051.9,
-      "median": null
+      "median": 45119.5
     },
     {
       "month": "2013-11",
       "avg": 49084.0,
-      "median": null
+      "median": 45154.6
     },
     {
       "month": "2013-12",
       "avg": 49052.4,
-      "median": null
+      "median": 45169.4
     },
     {
       "month": "2014-01",
       "avg": 49099.5,
-      "median": null
+      "median": 45088.3
     },
     {
       "month": "2014-02",
       "avg": 49245.1,
-      "median": null
+      "median": 45332.0
     },
     {
       "month": "2014-03",
       "avg": 49433.8,
-      "median": null
+      "median": 45581.3
     },
     {
       "month": "2014-04",
       "avg": 49447.8,
-      "median": null
+      "median": 45630.6
     },
     {
       "month": "2014-05",
       "avg": 49404.2,
-      "median": null
+      "median": 45627.7
     },
     {
       "month": "2014-06",
       "avg": 49367.3,
-      "median": null
+      "median": 45561.0
     },
     {
       "month": "2014-07",
       "avg": 49365.2,
-      "median": null
+      "median": 45610.7
     },
     {
       "month": "2014-08",
       "avg": 49425.6,
-      "median": null
+      "median": 45773.1
     },
     {
       "month": "2014-09",
       "avg": 49642.5,
-      "median": null
+      "median": 46185.9
     },
     {
       "month": "2014-10",
       "avg": 49845.2,
-      "median": null
+      "median": 46288.5
     },
     {
       "month": "2014-11",
       "avg": 49900.9,
-      "median": null
+      "median": 46331.4
     },
     {
       "month": "2014-12",
       "avg": 49892.7,
-      "median": null
+      "median": 46283.2
     },
     {
       "month": "2015-01",
       "avg": 50045.4,
-      "median": null
+      "median": 46555.8
     },
     {
       "month": "2015-02",
       "avg": 50215.0,
-      "median": null
+      "median": 46723.6
     },
     {
       "month": "2015-03",
       "avg": 50497.9,
-      "median": null
+      "median": 47185.0
     },
     {
       "month": "2015-04",
       "avg": 50868.3,
-      "median": null
+      "median": 47536.1
     },
     {
       "month": "2015-05",
       "avg": 51200.4,
-      "median": null
+      "median": 47823.5
     },
     {
       "month": "2015-06",
       "avg": 51548.1,
-      "median": null
+      "median": 48239.2
     },
     {
       "month": "2015-07",
       "avg": 53753.6,
-      "median": null
+      "median": 49923.1
     },
     {
       "month": "2015-08",
       "avg": 54047.9,
-      "median": null
+      "median": 50085.1
     },
     {
       "month": "2015-09",
       "avg": 54383.3,
-      "median": null
+      "median": 50517.3
     },
     {
       "month": "2015-10",
       "avg": 54715.3,
-      "median": null
+      "median": 50780.8
     },
     {
       "month": "2015-11",
       "avg": 54920.4,
-      "median": null
+      "median": 51060.6
     },
     {
       "month": "2015-12",
       "avg": 55129.9,
-      "median": null
+      "median": 51297.4
     },
     {
       "month": "2016-01",
       "avg": 55134.6,
-      "median": null
+      "median": 51289.4
     },
     {
       "month": "2016-02",
       "avg": 55046.2,
-      "median": null
+      "median": 51198.3
     },
     {
       "month": "2016-03",
       "avg": 55031.3,
-      "median": null
+      "median": 51221.8
     },
     {
       "month": "2016-04",
       "avg": 55093.6,
-      "median": null
+      "median": 51196.2
     },
     {
       "month": "2016-05",
       "avg": 55222.7,
-      "median": null
+      "median": 51466.7
     },
     {
       "month": "2016-06",
       "avg": 55360.3,
-      "median": null
+      "median": 51563.7
     },
     {
       "month": "2016-07",
       "avg": 55572.0,
-      "median": null
+      "median": 51708.2
     },
     {
       "month": "2016-08",
       "avg": 55801.7,
-      "median": null
+      "median": 51921.4
     },
     {
       "month": "2016-09",
       "avg": 55480.0,
-      "median": null
+      "median": 51781.7
     },
     {
       "month": "2016-10",
       "avg": 55931.1,
-      "median": null
+      "median": 52148.5
     },
     {
       "month": "2016-11",
       "avg": 56209.6,
-      "median": null
+      "median": 52401.4
     },
     {
       "month": "2016-12",
       "avg": 56227.8,
-      "median": null
+      "median": 52374.1
     },
     {
       "month": "2017-01",
       "avg": 56202.5,
-      "median": null
+      "median": 52316.0
     },
     {
       "month": "2017-02",
       "avg": 56252.9,
-      "median": null
+      "median": 52343.8
     },
     {
       "month": "2017-03",
       "avg": 56594.6,
-      "median": null
+      "median": 52457.7
     },
     {
       "month": "2017-04",
       "avg": 56774.0,
-      "median": null
+      "median": 52669.9
     },
     {
       "month": "2017-05",
       "avg": 57028.7,
-      "median": null
+      "median": 52996.3
     },
     {
       "month": "2017-06",
       "avg": 57677.4,
-      "median": null
+      "median": 53732.0
     },
     {
       "month": "2017-07",
       "avg": 57932.5,
-      "median": null
+      "median": 54052.9
     },
     {
       "month": "2017-08",
       "avg": 58281.8,
-      "median": null
+      "median": 54685.0
     },
     {
       "month": "2017-09",
       "avg": 58260.9,
-      "median": null
+      "median": 54670.0
     },
     {
       "month": "2017-10",
       "avg": 58445.9,
-      "median": null
+      "median": 54889.9
     },
     {
       "month": "2017-11",
       "avg": 58751.6,
-      "median": null
+      "median": 55139.7
     },
     {
       "month": "2017-12",
       "avg": 65990.5,
-      "median": null
+      "median": 62583.1
     },
     {
       "month": "2018-01",
       "avg": 67352.2,
-      "median": null
+      "median": 63808.1
     },
     {
       "month": "2018-02",
       "avg": 68622.0,
-      "median": null
+      "median": 65098.9
     },
     {
       "month": "2018-03",
       "avg": 69183.8,
-      "median": null
+      "median": 65671.3
     },
     {
       "month": "2018-04",
       "avg": 69367.3,
-      "median": null
+      "median": 65876.5
     },
     {
       "month": "2018-05",
       "avg": 69443.5,
-      "median": null
+      "median": 66169.0
     },
     {
       "month": "2018-06",
       "avg": 69473.9,
-      "median": null
+      "median": 66403.4
     },
     {
       "month": "2018-07",
       "avg": 69593.1,
-      "median": null
+      "median": 66642.2
     },
     {
       "month": "2018-08",
       "avg": 70238.3,
-      "median": null
+      "median": 67208.2
     },
     {
       "month": "2018-09",
       "avg": 71645.3,
-      "median": null
+      "median": 68517.1
     },
     {
       "month": "2018-10",
       "avg": 72034.7,
-      "median": null
+      "median": 68858.9
     },
     {
       "month": "2018-11",
       "avg": 71972.4,
-      "median": null
+      "median": 68865.2
     },
     {
       "month": "2018-12",
       "avg": 71774.9,
-      "median": null
+      "median": 68749.1
     },
     {
       "month": "2019-01",
       "avg": 81012.9,
-      "median": null
+      "median": 78619.0
     },
     {
       "month": "2019-02",
       "avg": 80602.7,
-      "median": null
+      "median": 78235.1
     },
     {
       "month": "2019-03",
       "avg": 80215.7,
-      "median": null
+      "median": 77798.5
     },
     {
       "month": "2019-04",
       "avg": 79921.1,
-      "median": null
+      "median": 77704.8
     },
     {
       "month": "2019-05",
       "avg": 79761.7,
-      "median": null
+      "median": 77528.2
     },
     {
       "month": "2019-06",
       "avg": 79721.4,
-      "median": null
+      "median": 77418.4
     },
     {
       "month": "2019-07",
       "avg": 79830.2,
-      "median": null
+      "median": 77459.6
     },
     {
       "month": "2019-08",
       "avg": 79972.1,
-      "median": null
+      "median": 77480.4
     },
     {
       "month": "2019-09",
       "avg": 80148.0,
-      "median": null
+      "median": 77600.7
     },
     {
       "month": "2019-10",
       "avg": 80712.1,
-      "median": null
+      "median": 77962.0
     },
     {
       "month": "2019-11",
       "avg": 81357.3,
-      "median": null
+      "median": 78467.4
     },
     {
       "month": "2019-12",
       "avg": 82722.8,
-      "median": null
+      "median": 79757.7
     },
     {
       "month": "2020-01",
       "avg": 87712.8,
-      "median": null
+      "median": 83920.6
     },
     {
       "month": "2020-02",
       "avg": 87718.5,
-      "median": null
+      "median": 83955.1
     },
     {
       "month": "2020-03",
       "avg": 87685.7,
-      "median": null
+      "median": 83937.6
     },
     {
       "month": "2020-04",
       "avg": 87379.1,
-      "median": null
+      "median": 83665.8
     },
     {
       "month": "2020-05",
       "avg": 87074.2,
-      "median": null
+      "median": 83410.1
     },
     {
       "month": "2020-06",
       "avg": 87189.7,
-      "median": null
+      "median": 83541.8
     },
     {
       "month": "2020-07",
       "avg": 88183.4,
-      "median": null
+      "median": 84683.5
     },
     {
       "month": "2020-08",
       "avg": 88621.6,
-      "median": null
+      "median": 85300.9
     },
     {
       "month": "2020-09",
       "avg": 88851.1,
-      "median": null
+      "median": 85592.0
     },
     {
       "month": "2020-10",
       "avg": 88936.8,
-      "median": null
+      "median": 85695.8
     },
     {
       "month": "2020-11",
       "avg": 89026.7,
-      "median": null
+      "median": 85833.9
     },
     {
       "month": "2020-12",
       "avg": 89310.0,
-      "median": null
+      "median": 86223.1
     },
     {
       "month": "2021-01",
       "avg": 89725.4,
-      "median": null
+      "median": 86702.7
     },
     {
       "month": "2021-02",
       "avg": 90382.4,
-      "median": null
+      "median": 87473.8
     },
     {
       "month": "2021-03",
       "avg": 90711.2,
-      "median": null
+      "median": 87687.6
     },
     {
       "month": "2021-04",
       "avg": 91160.4,
-      "median": null
+      "median": 88004.7
     },
     {
       "month": "2021-05",
       "avg": 91712.7,
-      "median": null
+      "median": 88395.9
     },
     {
       "month": "2021-06",
       "avg": 92812.6,
-      "median": null
+      "median": 89519.4
     },
     {
       "month": "2021-07",
       "avg": 110930.0,
-      "median": null
+      "median": 94000.0
     },
     {
       "month": "2021-08",
       "avg": 111925.0,
-      "median": null
+      "median": 94800.0
     },
     {
       "month": "2021-09",
       "avg": 113042.7,
-      "median": null
+      "median": 95700.0
     },
     {
       "month": "2021-10",
       "avg": 114065.9,
-      "median": null
+      "median": 96550.0
     },
     {
       "month": "2021-11",
       "avg": 114828.8,
-      "median": null
+      "median": 97000.0
     },
     {
       "month": "2021-12",
       "avg": 115146.9,
-      "median": null
+      "median": 97100.0
     },
     {
       "month": "2022-01",
       "avg": 115172.1,
-      "median": null
+      "median": 97050.0
     },
     {
       "month": "2022-02",
       "avg": 115084.2,
-      "median": null
+      "median": 97000.0
     },
     {
       "month": "2022-03",
       "avg": 115014.6,
-      "median": null
+      "median": 96950.0
     },
     {
       "month": "2022-04",
       "avg": 115041.6,
-      "median": null
+      "median": 96600.0
     },
     {
       "month": "2022-05",
       "avg": 114880.8,
-      "median": null
+      "median": 96500.0
     },
     {
       "month": "2022-06",
       "avg": 114821.4,
-      "median": null
+      "median": 96300.0
     },
     {
       "month": "2022-07",
       "avg": 114611.6,
-      "median": null
+      "median": 96200.0
     },
     {
       "month": "2022-08",
       "avg": 114161.4,
-      "median": null
+      "median": 95900.0
     },
     {
       "month": "2022-09",
       "avg": 113369.8,
-      "median": null
+      "median": 95100.0
     },
     {
       "month": "2022-10",
       "avg": 112009.5,
-      "median": null
+      "median": 93350.0
     },
     {
       "month": "2022-11",
       "avg": 109816.8,
-      "median": null
+      "median": 91300.0
     },
     {
       "month": "2022-12",
       "avg": 106759.0,
-      "median": null
+      "median": 88300.0
     },
     {
       "month": "2023-01",
       "avg": 104326.7,
-      "median": null
+      "median": 86600.0
     },
     {
       "month": "2023-02",
       "avg": 103261.7,
-      "median": null
+      "median": 85700.0
     },
     {
       "month": "2023-03",
       "avg": 102618.9,
-      "median": null
+      "median": 84900.0
     },
     {
       "month": "2023-04",
       "avg": 102297.7,
-      "median": null
+      "median": 84500.0
     },
     {
       "month": "2023-05",
       "avg": 102500.3,
-      "median": null
+      "median": 84200.0
     },
     {
       "month": "2023-06",
       "avg": 102865.5,
-      "median": null
+      "median": 84200.0
     },
     {
       "month": "2023-07",
       "avg": 103301.5,
-      "median": null
+      "median": 84500.0
     },
     {
       "month": "2023-08",
       "avg": 103977.4,
-      "median": null
+      "median": 84800.0
     },
     {
       "month": "2023-09",
       "avg": 104631.8,
-      "median": null
+      "median": 85100.0
     },
     {
       "month": "2023-10",
       "avg": 105090.7,
-      "median": null
+      "median": 85650.0
     },
     {
       "month": "2023-11",
       "avg": 105259.6,
-      "median": null
+      "median": 85800.0
     },
     {
       "month": "2023-12",
       "avg": 105145.8,
-      "median": null
+      "median": 85700.0
     },
     {
       "month": "2024-01",
       "avg": 105223.4,
-      "median": null
+      "median": 85800.0
     },
     {
       "month": "2024-02",
       "avg": 105092.6,
-      "median": null
+      "median": 85600.0
     },
     {
       "month": "2024-03",
       "avg": 105133.9,
-      "median": null
+      "median": 85600.0
     },
     {
       "month": "2024-04",
       "avg": 105375.2,
-      "median": null
+      "median": 85650.0
     },
     {
       "month": "2024-05",
       "avg": 105697.5,
-      "median": null
+      "median": 85800.0
     },
     {
       "month": "2024-06",
       "avg": 106506.7,
-      "median": null
+      "median": 86000.0
     },
     {
       "month": "2024-07",
       "avg": 108264.8,
-      "median": null
+      "median": 86700.0
     },
     {
       "month": "2024-08",
       "avg": 110159.1918,
-      "median": null
+      "median": 87500.0
     },
     {
       "month": "2024-09",
       "avg": 111352.6047,
-      "median": null
+      "median": 88400.0
     },
     {
       "month": "2024-10",
       "avg": 112037.4045,
-      "median": null
+      "median": 88700.0
     },
     {
       "month": "2024-11",
       "avg": 112463.8226,
-      "median": null
+      "median": 88800.0
     },
     {
       "month": "2024-12",
       "avg": 112648.8905,
-      "median": null
+      "median": 88800.0
     },
     {
       "month": "2025-01",
       "avg": 112746.6238,
-      "median": null
+      "median": 88900.0
     },
     {
       "month": "2025-02",
       "avg": 113344.8824,
-      "median": null
+      "median": 89000.0
     },
     {
       "month": "2025-03",
       "avg": 115110.1378,
-      "median": null
+      "median": 89300.0
     },
     {
       "month": "2025-04",
       "avg": 116633.7022,
-      "median": null
+      "median": 90700.0
     },
     {
       "month": "2025-05",
       "avg": 117718.7393,
-      "median": null
+      "median": 90800.0
     },
     {
       "month": "2025-06",
       "avg": 120554.6708,
-      "median": null
+      "median": 91300.0
     },
     {
       "month": "2025-07",
       "avg": 122449.8331,
-      "median": null
+      "median": 92000.0
     },
     {
       "month": "2025-08",
       "avg": 123236.1092,
-      "median": null
+      "median": 92400.0
     },
     {
       "month": "2025-09",
       "avg": 124148.8953,
-      "median": null
+      "median": 92800.0
     },
     {
       "month": "2025-10",
       "avg": 126373.6514,
-      "median": null
+      "median": 94100.0
     },
     {
       "month": "2025-11",
       "avg": 127590.8979,
-      "median": null
+      "median": 94900.0
     },
     {
       "month": "2025-12",
       "avg": 128942.5521,
-      "median": null
+      "median": 95800.0
     }
   ]
 }
