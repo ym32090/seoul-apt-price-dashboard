@@ -80,4 +80,417 @@ async function getLatest(){for(const src of ['reb','kb']){try{const response=awa
 setRange();getLatest();
 })();
 </script>
+
+<!-- v1.5 comparison enhancement -->
+<style>
+#modeButtons [data-mode="growth"]{display:none!important}
+#compareBlock{margin-top:18px;border:1px solid #d8e3f2;border-radius:15px;background:#f8fbff;overflow:hidden}
+#compareBlock>summary{cursor:pointer;padding:15px 18px;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:750;list-style:none}
+#compareBlock>summary::-webkit-details-marker{display:none}
+#compareBlock>summary:after{content:'펼치기';font-size:12px;color:#4266a1;font-weight:600}
+#compareBlock[open]>summary:after{content:'접기'}
+#compareInner{padding:4px 18px 18px;border-top:1px solid #e3eaf6}
+#compareInner .cmpintro{color:#617188;font-size:12px;margin:10px 0}
+#compareInner .cmpfields{display:flex;flex-wrap:wrap;align-items:end;gap:10px}
+#compareInner .cmpfields label{display:flex;flex-direction:column;gap:6px;color:#526581;font-size:12px;font-weight:700;min-width:160px;flex:1}
+#compareInner select{width:100%;border:1px solid #d5deeb;padding:10px 11px;border-radius:9px;background:white;color:#172944;font-size:14px;min-height:42px}
+#compareInner .cmpmetrics{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+#compareInner .cmpstat{background:white;border:1px solid #e3e9f3;border-radius:11px;padding:12px 14px;flex:1;min-width:145px}
+#compareInner .cmpstat small{display:block;color:#75849a;font-size:11px;margin-bottom:5px}
+#compareInner .cmpstat strong{font-size:17px;letter-spacing:-.03em}
+#compareInner .cmpstat.positive strong{color:#146b65}
+#compareInner .cmpstat.negative strong{color:#b4423e}
+#cmpChartBox{position:relative;width:100%;background:white;border:1px solid #e3e9f3;border-radius:11px;overflow:hidden}
+#cmpSvg{display:block;width:100%;height:auto;min-height:210px}
+#cmpTip{position:absolute;pointer-events:none;top:12px;right:12px;background:#182b47;color:#fff;padding:10px 12px;border-radius:10px;font-size:12px;max-width:230px;box-shadow:0 8px 20px #0002;z-index:3}
+#cmpTip[hidden]{display:none}
+#cmpNote{font-size:12px;color:#617188;line-height:1.65;margin-top:9px}
+#cmpReset{border:1px solid #ccd8e9;color:#335d91;background:white;padding:9px 13px;border-radius:9px;cursor:pointer;font-size:12px}
+#cmpMessage{margin:10px 0;color:#956822;font-size:12px}
+@media(max-width:620px){
+#compareInner{padding:3px 12px 13px}
+#compareInner .cmpfields label{min-width:130px}
+#compareInner .cmpstat{min-width:110px;padding:10px}
+#compareInner .cmpstat strong{font-size:15px}
+}
+</style>
+<script>
+(function(){
+'use strict';
+
+var tab=document.querySelector('[data-source="reb"]');
+if(tab)tab.textContent='한국부동산원(REB)';
+var modeArea=document.querySelector('#modeButtons');
+var priceButton=modeArea&&modeArea.querySelector('[data-mode="price"]');
+if(priceButton)priceButton.textContent='가격 추이';
+
+var baseElement=document.querySelector('#initial-data');
+var base=baseElement?JSON.parse(baseElement.textContent):{};
+var datasets={
+ reb:base.reb||{rows:[]},
+ kb:base.kb||{rows:[]}
+};
+
+var allSeries=[
+ {id:'reb_avg',src:'reb',field:'avg',name:'한국부동산원(REB) 평균',color:'#3469dd'},
+ {id:'reb_median',src:'reb',field:'median',name:'한국부동산원(REB) 중위',color:'#9473c8'},
+ {id:'kb_avg',src:'kb',field:'avg',name:'KB 평균',color:'#0a9b88'},
+ {id:'kb_median',src:'kb',field:'median',name:'KB 중위',color:'#db9a37'}
+];
+
+var warning=document.querySelector('#warning');
+if(!warning)return;
+
+var panel=document.createElement('details');
+panel.id='compareBlock';
+panel.innerHTML=
+ '<summary>기간별 가격 증감 비교 <span style="font-weight:500;font-size:12px;color:#74849a">두 시점을 선택해 비교</span></summary>'+
+ '<div id="compareInner">'+
+ '<p class="cmpintro">0% 기준은 선택한 시작월의 가격입니다. 같은 통계의 두 시점만 비교하며, 서로 다른 기관의 가격을 섞지 않습니다.</p>'+
+ '<div class="cmpfields">'+
+ '<label>비교 지표<select id="cmpSeries"></select></label>'+
+ '<label>시작월 A (0% 기준)<select id="cmpStart"></select></label>'+
+ '<label>종료월 B<select id="cmpEnd"></select></label>'+
+ '</div>'+
+ '<div class="cmpmetrics" id="cmpMetrics" aria-live="polite"></div>'+
+ '<div id="cmpChartBox">'+
+ '<svg id="cmpSvg" viewBox="0 0 1000 390" role="img" aria-label="선택한 시작월 기준 0% 가격 누적 변화 그래프"></svg>'+
+ '<div id="cmpTip" hidden></div></div>'+
+ '<p id="cmpMessage" role="status"></p>'+
+ '<button id="cmpReset" type="button">그래프에서 다시 두 시점 선택</button>'+
+ '<p id="cmpNote">그래프의 두 점을 순서대로 클릭하거나, 위에서 시작월과 종료월을 선택하세요. 가로의 진한 0% 선이 A시점의 가격이며, 아래로 내려가면 감소, 위로 올라가면 증가입니다. 이 변화율은 원자료 가격의 증감이며 공식 매매가격지수 변동률이 아닙니다. 표본 변경에 영향을 받을 수 있습니다.</p>'+
+ '</div>';
+
+warning.parentNode.insertBefore(panel,warning.nextSibling);
+
+var metric=panel.querySelector('#cmpSeries');
+var start=panel.querySelector('#cmpStart');
+var end=panel.querySelector('#cmpEnd');
+var svg=panel.querySelector('#cmpSvg');
+var tip=panel.querySelector('#cmpTip');
+var msg=panel.querySelector('#cmpMessage');
+var metrics=panel.querySelector('#cmpMetrics');
+
+var active=null,pick=0,initial=false;
+var NS='http://www.w3.org/2000/svg';
+
+function chosenTab(){
+ return(document.querySelector('#tabs [aria-selected="true"]')||{}).dataset?.source||'all';
+}
+function pickSeries(){
+ var tab=chosenTab();
+ return allSeries.filter(function(s){
+  return(tab==='all'||tab===s.src)&&
+   (datasets[s.src].rows||[]).some(function(r){
+    return Number.isFinite(r[s.field]);
+   });
+ });
+}
+function monthly(s){
+ return(datasets[s.src].rows||[])
+  .filter(function(r){return Number.isFinite(r[s.field]);})
+  .map(function(r){return{month:r.month,value:r[s.field]};})
+  .sort(function(a,b){return a.month.localeCompare(b.month);});
+}
+function getIndex(m){
+ var p=m.split('-').map(Number);
+ return p[0]*12+p[1]-1;
+}
+function nice(v){
+ return(v>0?'+':'')+v.toFixed(1)+'%';
+}
+function asMoney(v){
+ return(v/10000).toLocaleString('ko-KR',{maximumFractionDigits:3})+'억원';
+}
+function setOptions(select,arr,selected){
+ select.replaceChildren();
+ arr.forEach(function(m){
+  var o=document.createElement('option');
+  o.value=m;
+  o.textContent=m.replace('-','.');
+  select.appendChild(o);
+ });
+ if(arr.includes(selected))select.value=selected;
+}
+function E(tag,attrs,text){
+ var n=document.createElementNS(NS,tag);
+ Object.entries(attrs||{}).forEach(function(e){
+  n.setAttribute(e[0],e[1]);
+ });
+ if(text!==undefined)n.textContent=text;
+ svg.appendChild(n);
+ return n;
+}
+function tickStep(raw){
+ if(raw<=0)return 1;
+ var p=Math.pow(10,Math.floor(Math.log10(raw)));
+ var f=raw/p;
+ return(f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;
+}
+function drawChart(data,a,b){
+ svg.replaceChildren();
+ tip.hidden=true;
+ if(!data.length)return;
+ var m=new Map(data.map(function(r){return[r.month,r.value];}));
+ if(!m.has(a)||!m.has(b))return;
+
+ var baseValue=m.get(a);
+ var changes=data.map(function(r){return(r.value/baseValue-1)*100;});
+ var rawMin=Math.min(0,...changes);
+ var rawMax=Math.max(0,...changes);
+ var step=tickStep(Math.max(rawMax-rawMin,0.5)/5);
+ var lo=Math.floor((rawMin-step*.25)/step)*step;
+ var hi=Math.ceil((rawMax+step*.25)/step)*step;
+ if(lo===hi){lo-=step;hi+=step;}
+
+ var L=83,R=967,T=38,B=334;
+ var x0=getIndex(data[0].month);
+ var x1=getIndex(data[data.length-1].month);
+ var fx=function(month){
+  return L+(getIndex(month)-x0)/Math.max(1,x1-x0)*(R-L);
+ };
+ var fy=function(n){
+  return B-(n-lo)/(hi-lo)*(B-T);
+ };
+
+ if(a<=b){
+  E('rect',{
+   x:fx(a),y:T,
+   width:Math.max(1,fx(b)-fx(a)),
+   height:B-T,fill:'#e8f0fc'
+  });
+ }
+
+ for(var tick=Math.round(lo/step);tick<=Math.round(hi/step);tick++){
+  var v=tick*step,y=fy(v);
+  var zero=Math.abs(v)<step/100;
+  E('line',{
+   x1:L,x2:R,y1:y,y2:y,
+   stroke:zero?'#40516d':'#e3eaf4',
+   'stroke-width':zero?2.8:1
+  });
+  E('text',{
+   x:L-12,y:y+4,'text-anchor':'end',
+   fill:zero?'#283a55':'#6d7d94',
+   'font-size':zero?15:13,
+   'font-weight':zero?700:400
+  },Math.abs(v)<.00001?'0%':nice(v));
+ }
+
+ var nTicks=Math.min(6,data.length);
+ for(var i=0;i<nTicks;i++){
+  var p=data[Math.round(i*(data.length-1)/Math.max(1,nTicks-1))];
+  E('text',{
+   x:fx(p.month),y:365,
+   'text-anchor':'middle',
+   fill:'#6f8096','font-size':12
+  },p.month.replace('-','.'));
+ }
+
+ var segments=[],prev=-999;
+ function flush(){
+  if(segments.length>1){
+   E('polyline',{
+    points:segments.join(' '),
+    stroke:active.color,'stroke-width':3.3,
+    fill:'none','stroke-linecap':'round',
+    'stroke-linejoin':'round'
+   });
+  }else if(segments.length===1){
+   var xy=segments[0].split(',');
+   E('circle',{cx:xy[0],cy:xy[1],r:4,fill:active.color});
+  }
+  segments=[];
+ }
+ data.forEach(function(r){
+  var n=getIndex(r.month);
+  if(n-prev>1)flush();
+  segments.push(fx(r.month)+','+fy((r.value/baseValue-1)*100));
+  prev=n;
+ });
+ flush();
+
+ [a,b].forEach(function(month,idx){
+  var x=fx(month);
+  var pct=(m.get(month)/baseValue-1)*100;
+  E('line',{
+   x1:x,x2:x,y1:T,y2:B,
+   stroke:idx?'#d88935':'#3469dd',
+   'stroke-width':1.8,'stroke-dasharray':'5 5'
+  });
+  E('circle',{
+   cx:x,cy:fy(pct),r:7,
+   fill:idx?'#d88935':'#3469dd',
+   stroke:'#fff','stroke-width':2
+  });
+  E('text',{
+   x:Math.max(L+10,Math.min(x,R-10)),
+   y:T+15,'text-anchor':'middle',
+   fill:idx?'#bf6c27':'#315fba',
+   'font-size':13,'font-weight':700
+  },idx?'B':'A');
+ });
+
+ var cover=E('rect',{
+  x:L,y:T,width:R-L,height:B-T,
+  fill:'transparent',style:'cursor:crosshair'
+ });
+
+ function nearest(e){
+  var rect=svg.getBoundingClientRect();
+  var xp=(e.clientX-rect.left)/rect.width*1000;
+  return data.reduce(function(curr,r){
+   return Math.abs(fx(r.month)-xp)<Math.abs(fx(curr.month)-xp)?r:curr;
+  },data[0]);
+ }
+ cover.addEventListener('pointermove',function(e){
+  var r=nearest(e);
+  tip.textContent=r.month+' · '+asMoney(r.value)+
+   ' · A 기준 '+nice((r.value/baseValue-1)*100);
+  tip.hidden=false;
+ });
+ cover.addEventListener('pointerleave',function(){
+  tip.hidden=true;
+ });
+ cover.addEventListener('click',function(e){
+  var clicked=nearest(e).month;
+  if(pick===0){
+   start.value=clicked;
+   pick=1;
+   msg.textContent='A = '+clicked+
+    ' 선택됨. 이제 종료할 B 지점을 클릭하세요.';
+  }else{
+   end.value=clicked;
+   if(start.value>end.value){
+    var temp=start.value;
+    start.value=end.value;
+    end.value=temp;
+   }
+   pick=0;
+   msg.textContent='A부터 B까지의 증감이 계산되었습니다.';
+  }
+  update();
+ });
+}
+function update(){
+ if(!panel.open)return;
+ var options=pickSeries();
+ var selected=options.find(function(s){
+  return s.id===metric.value;
+ })||options[0];
+
+ if(!selected){
+  metrics.textContent='해당 출처에 표시 가능한 가격 데이터가 없습니다.';
+  svg.replaceChildren();
+  return;
+ }
+
+ if(!active||active.id!==selected.id){
+  active=selected;
+  setOptions(metric,options.map(function(s){return s.id;}),selected.id);
+  Array.from(metric.options).forEach(function(o){
+   o.textContent=options.find(function(s){
+    return s.id===o.value;
+   }).name;
+  });
+  initial=false;
+ }
+
+ var rangeStart=document.querySelector('#from')?.value||'0000-01';
+ var rangeEnd=document.querySelector('#to')?.value||'9999-12';
+ var d=monthly(active).filter(function(r){
+  return r.month>=rangeStart&&r.month<=rangeEnd;
+ });
+ var months=d.map(function(r){return r.month;});
+
+ if(!months.length){
+  svg.replaceChildren();
+  metrics.textContent='이 지표는 선택 기간에 자료가 없습니다.';
+  start.replaceChildren();
+  end.replaceChildren();
+  return;
+ }
+
+ var a=initial?start.value:months[0];
+ var b=initial?end.value:months[months.length-1];
+ setOptions(start,months,a);
+ setOptions(end,months,b);
+ if(start.value>end.value)end.value=start.value;
+ initial=true;
+
+ var am=d.find(function(r){return r.month===start.value;});
+ var bm=d.find(function(r){return r.month===end.value;});
+ var diff=bm.value-am.value;
+ var change=(bm.value/am.value-1)*100;
+
+ metrics.innerHTML=
+  '<div class="cmpstat"><small>시작 A · '+start.value+
+  '</small><strong>'+asMoney(am.value)+'</strong></div>'+
+  '<div class="cmpstat"><small>종료 B · '+end.value+
+  '</small><strong>'+asMoney(bm.value)+'</strong></div>'+
+  '<div class="cmpstat '+(diff>0?'positive':diff<0?'negative':'')+
+  '"><small>가격 증감</small><strong>'+
+  (diff>0?'+':'')+Math.round(diff).toLocaleString('ko-KR')+
+  '만원</strong></div>'+
+  '<div class="cmpstat '+(change>0?'positive':change<0?'negative':'')+
+  '"><small>누적 변화율</small><strong>'+
+  nice(change)+'</strong></div>';
+
+ drawChart(d,start.value,end.value);
+}
+function refresh(){
+ initial=false;
+ active=null;
+ pick=0;
+ msg.textContent='';
+ update();
+}
+
+metric.addEventListener('change',function(){
+ active=null;initial=false;update();
+});
+start.addEventListener('change',function(){
+ initial=true;pick=0;update();
+});
+end.addEventListener('change',function(){
+ initial=true;pick=0;update();
+});
+panel.querySelector('#cmpReset').addEventListener('click',function(){
+ pick=0;
+ msg.textContent='먼저 그래프에서 시작점 A를 클릭하고, 그다음 종료점 B를 클릭하세요.';
+});
+panel.addEventListener('toggle',function(){
+ if(panel.open)refresh();
+});
+document.querySelector('#tabs')?.addEventListener('click',function(){
+ setTimeout(refresh,0);
+});
+document.querySelector('#periods')?.addEventListener('click',function(){
+ setTimeout(refresh,0);
+});
+['from','to'].forEach(function(id){
+ document.getElementById(id)?.addEventListener('change',function(){
+  setTimeout(refresh,0);
+ });
+});
+
+Promise.all(['reb','kb'].map(function(src){
+ return fetch('./data/'+src+'.json?ts='+Date.now(),{cache:'no-store'})
+  .then(function(r){
+   if(!r.ok)throw new Error('HTTP');
+   return r.json();
+  })
+  .then(function(doc){
+   if(doc.source===src&&Array.isArray(doc.rows)&&doc.rows.every(function(r){
+    return /^\d{4}-\d\d$/.test(r.month)&&
+     (r.avg===null||Number.isFinite(r.avg))&&
+     (r.median===null||Number.isFinite(r.median));
+   }))datasets[src]=doc;
+  }).catch(function(){});
+})).then(function(){
+ if(panel.open)refresh();
+});
+})();
+</script>
 </body></html>
+
