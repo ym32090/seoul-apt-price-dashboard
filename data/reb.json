@@ -1,0 +1,13 @@
+{
+  "schema": "seoul-apt-price-v1",
+  "source": "reb",
+  "region": "서울",
+  "housing_type": "아파트",
+  "transaction": "매매",
+  "unit": "만원",
+  "origin": "한국부동산원 R-ONE 전국주택가격동향조사 월간",
+  "source_url": "https://www.reb.or.kr/r-one/portal/stat/easyStatPage/A_2024_00060.do",
+  "updated_at": null,
+  "verification": "NO_SERIES_DOWNLOADED_API_KEY_REQUIRED",
+  "rows": []
+}

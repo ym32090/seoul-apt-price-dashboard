@@ -1,0 +1,39 @@
+{
+  "schema": "seoul-apt-price-v1",
+  "source": "kb",
+  "region": "서울",
+  "housing_type": "아파트",
+  "transaction": "매매",
+  "unit": "만원",
+  "origin": "KB 발표 수치 인용 보도 기반 초기 5개월 (원본 KB 시계열 파일 미검증)",
+  "updated_at": "2026-11-13",
+  "source_url": "https://data.kbland.kr/",
+  "verification": "SECONDARY_REPORTED_VALUES_NEED_KB_ORIGINAL_CROSSCHECK",
+  "rows": [
+    {
+      "month": "2026-06",
+      "avg": 158311,
+      "median": null
+    },
+    {
+      "month": "2026-07",
+      "avg": 159490,
+      "median": 127853
+    },
+    {
+      "month": "2026-08",
+      "avg": 160739,
+      "median": 129167
+    },
+    {
+      "month": "2026-09",
+      "avg": 162469,
+      "median": 131333
+    },
+    {
+      "month": "2026-10",
+      "avg": 163546,
+      "median": 132167
+    }
+  ]
+}
