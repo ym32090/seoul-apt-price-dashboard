@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="서울 아파트 매매 평균·중위가격 공식 통계 비교. 출처별 조사월과 자료 갱신 시각을 확인하세요.">
-<title>서울 아파트 매매가격 추이 | Seoul Apartment Dashboard v1.4</title>
+<title>서울 아파트 매매가격 추이 | Seoul Apartment Dashboard v1.6</title>
 <style>
 :root{--bg:#f4f7fc;--paper:#fff;--ink:#142541;--muted:#617188;--line:#e2e9f2;--blue:#3469dd;--violet:#9473c8;--green:#0a9b88;--orange:#db9a37}*{box-sizing:border-box}html{color-scheme:light}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,'Malgun Gothic','Noto Sans KR',sans-serif;color:var(--ink);line-height:1.5}button,input{font:inherit}button{cursor:pointer}a{color:var(--blue)}.container{max-width:1100px;margin:0 auto;padding:36px 20px 58px}.head{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:24px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.13em;color:#4870b0;margin:0 0 7px}h1{font-size:29px;line-height:1.2;letter-spacing:-.04em;margin:0 0 8px}p{margin:0}.subtitle{color:var(--muted);font-size:13px}.region{font-size:12px;padding:9px 13px;border:1px solid #d6e1f0;border-radius:50px;color:#58728c;background:#ebf2fa;white-space:nowrap}.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;box-shadow:0 9px 33px #172b4708;margin-bottom:16px;padding:23px}.label{font-size:12px;font-weight:800;color:#58708a;margin-bottom:8px}.tabs{display:flex;gap:8px;flex-wrap:wrap}.tab,.chip,.action{border:1px solid #dce4ef;background:#f7f9fd;color:#50627f;border-radius:9px;padding:9px 16px;font-size:13px;font-weight:750}.tab[aria-selected="true"],.chip[aria-pressed="true"]{background:#eaf0ff;color:#204eac;border-color:#bdceff}.tab:hover,.chip:hover,.action:hover{border-color:#a8bcdf}.filters{display:flex;gap:16px 24px;justify-content:space-between;flex-wrap:wrap;margin-top:20px;padding-top:18px;border-top:1px solid #edf0f5}.period{display:flex;flex-wrap:wrap;gap:6px}.chip{padding:8px 11px}.date-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}input[type="month"]{height:36px;border:1px solid #d9e3f0;border-radius:9px;background:#fff;color:#293d59;padding:4px 8px;font-size:13px;min-width:130px}.updates{margin-top:17px;padding:12px 14px;border-radius:10px;background:#f5f8fd;border:1px solid #e5edf8;color:#506784;font-size:12px;line-height:1.9}.updates strong{color:#1f3658}.updates .item{display:inline-block;margin-right:20px}.updates .mark{font-size:11px;color:#69819a}.graph-title{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:10px}.graph-title h2{font-size:19px;margin:0;letter-spacing:-.035em}.muted{font-size:12px;color:var(--muted)}.series-legend{display:flex;gap:12px 18px;flex-wrap:wrap;margin:16px 0 4px}.legend-item{display:flex;align-items:center;gap:8px;border:0;background:transparent;cursor:pointer;font-size:12px;font-weight:700;color:#48617e;padding:4px 0}.legend-item.off{opacity:.35}.dot{display:inline-block;height:10px;width:10px;border-radius:50%}.chartbox{position:relative;margin-top:4px}.chart{width:100%;height:auto;display:block;touch-action:pan-y}.tooltip{position:absolute;z-index:4;pointer-events:none;background:#172942;border-radius:12px;padding:12px 15px;color:#fff;box-shadow:0 12px 32px #16244044;min-width:235px;max-width:300px;font-size:12px}.tooltip[hidden]{display:none}.tooltip .month{font-size:13px;font-weight:800;margin-bottom:8px}.ttline{display:flex;justify-content:space-between;gap:18px;margin:4px 0}.ttline b{font-variant-numeric:tabular-nums}.ttsmall{font-size:10px;color:#cad5e8}.note{font-size:12px;color:#6c7f94;line-height:1.7;margin-top:10px}.note strong{color:#385678}.subtle-warning{margin-top:10px;padding:10px 13px;font-size:12px;background:#fffaf0;color:#765e30;border-radius:10px;border:1px solid #f2e8d2}.subtle-warning[hidden]{display:none}.table-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.table-top h2{font-size:17px;letter-spacing:-.03em;margin:0}.action{background:#fff}.scroll{overflow:auto;max-height:360px;margin-top:15px;border-top:1px solid var(--line)}table{border-collapse:collapse;width:100%;min-width:585px;font-size:13px}th,td{padding:10px 13px;border-bottom:1px solid #eef2f8;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}th:first-child,td:first-child{text-align:left}th{position:sticky;top:0;background:#f7f9fc;color:#59708a;font-size:12px}tr:hover td{background:#f7faff}.foot{margin-top:15px;font-size:11px;color:#8290a1;line-height:1.7}.foot a{color:#7287a7}.empty{font-size:14px;fill:#697e96}.sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0,0,0,0)}@media(max-width:650px){.container{padding:17px 11px 35px}.head{display:block;margin-bottom:16px}h1{font-size:23px}.region{display:inline-block;margin-top:12px}.panel{padding:15px;border-radius:13px}.tabs{display:grid;grid-template-columns:repeat(3,1fr)}.tab{padding:10px 4px}.filters{display:block;margin-top:14px}.date-area{margin-top:16px}.updates .item{display:block;margin-right:0}.graph-title h2{font-size:17px}.chartbox{margin:0 -8px}.tooltip{min-width:210px;max-width:250px;padding:10px;font-size:11px}.series-legend{gap:8px 14px}.note{font-size:11px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 </style>
@@ -33,7 +33,7 @@
  </section>
  <footer class="foot">데이터 출처: <a href="https://www.reb.or.kr/r-one/portal/stat/easyStatPage.do" target="_blank" rel="noopener">한국부동산원 R-ONE</a> · <a href="https://data.kbland.kr/" target="_blank" rel="noopener">KB부동산</a>. KB 2026년 5개월은 보도 인용 수치로, KB 원본 전체 시계열 검증 전입니다. 한국부동산원 시계열은 정기적인 표본 변경의 영향을 받으므로 원자료 가격차를 동일 아파트의 가격 상승률로 해석해서는 안 됩니다. 공식 매매가격지수와 구분해 확인하세요.</footer>
 </main>
-<script id="initial-data" type="application/json">{"reb":{"schema":"seoul-apt-price-v1","source":"reb","region":"서울","housing_type":"아파트","transaction":"매매","unit":"만원","origin":"한국부동산원 R-ONE 전국주택가격동향조사(월간)","source_url":"https://www.reb.or.kr/r-one/portal/stat/easyStatPage/A_2024_00060.do","updated_at":"2026-11-13T06:32:19+00:00","verification":"R_ONE_OFFICIAL_API_AVERAGE_ONLY_MEDIAN_UNCONFIRMED","statistics":{"avg_table_id":"A_2024_00060","median_table_id":null,"seoul_cls_id":"500008"},"rows":[{"month":"2012-01","avg":54095.4,"median":null},{"month":"2012-02","avg":53887.6,"median":null},{"month":"2012-03","avg":53607.9,"median":null},{"month":"2012-04","avg":53240.9,"median":null},{"month":"2012-05","avg":52973.3,"median":null},{"month":"2012-06","avg":52513.1,"median":null},{"month":"2012-07","avg":52112.3,"median":null},{"month":"2012-08","avg":51584.6,"median":null},{"month":"2012-09","avg":51182.3,"median":null},{"month":"2012-10","avg":50821.7,"median":null},{"month":"2012-11","avg":50549.4,"median":null},{"month":"2012-12","avg":49990.0,"median":null},{"month":"2013-01","avg":49618.0,"median":null},{"month":"2013-02","avg":49416.8,"median":null},{"month":"2013-03","avg":49367.5,"median":null},{"month":"2013-04","avg":49449.2,"median":null},{"month":"2013-05","avg":49551.1,"median":null},{"month":"2013-06","avg":49390.8,"median":null},{"month":"2013-07","avg":49068.2,"median":null},{"month":"2013-08","avg":48811.6,"median":null},{"month":"2013-09","avg":48842.8,"median":null},{"month":"2013-10","avg":49051.9,"median":null},{"month":"2013-11","avg":49084.0,"median":null},{"month":"2013-12","avg":49052.4,"median":null},{"month":"2014-01","avg":49099.5,"median":null},{"month":"2014-02","avg":49245.1,"median":null},{"month":"2014-03","avg":49433.8,"median":null},{"month":"2014-04","avg":49447.8,"median":null},{"month":"2014-05","avg":49404.2,"median":null},{"month":"2014-06","avg":49367.3,"median":null},{"month":"2014-07","avg":49365.2,"median":null},{"month":"2014-08","avg":49425.6,"median":null},{"month":"2014-09","avg":49642.5,"median":null},{"month":"2014-10","avg":49845.2,"median":null},{"month":"2014-11","avg":49900.9,"median":null},{"month":"2014-12","avg":49892.7,"median":null},{"month":"2015-01","avg":50045.4,"median":null},{"month":"2015-02","avg":50215.0,"median":null},{"month":"2015-03","avg":50497.9,"median":null},{"month":"2015-04","avg":50868.3,"median":null},{"month":"2015-05","avg":51200.4,"median":null},{"month":"2015-06","avg":51548.1,"median":null},{"month":"2015-07","avg":53753.6,"median":null},{"month":"2015-08","avg":54047.9,"median":null},{"month":"2015-09","avg":54383.3,"median":null},{"month":"2015-10","avg":54715.3,"median":null},{"month":"2015-11","avg":54920.4,"median":null},{"month":"2015-12","avg":55129.9,"median":null},{"month":"2016-01","avg":55134.6,"median":null},{"month":"2016-02","avg":55046.2,"median":null},{"month":"2016-03","avg":55031.3,"median":null},{"month":"2016-04","avg":55093.6,"median":null},{"month":"2016-05","avg":55222.7,"median":null},{"month":"2016-06","avg":55360.3,"median":null},{"month":"2016-07","avg":55572.0,"median":null},{"month":"2016-08","avg":55801.7,"median":null},{"month":"2016-09","avg":55480.0,"median":null},{"month":"2016-10","avg":55931.1,"median":null},{"month":"2016-11","avg":56209.6,"median":null},{"month":"2016-12","avg":56227.8,"median":null},{"month":"2017-01","avg":56202.5,"median":null},{"month":"2017-02","avg":56252.9,"median":null},{"month":"2017-03","avg":56594.6,"median":null},{"month":"2017-04","avg":56774.0,"median":null},{"month":"2017-05","avg":57028.7,"median":null},{"month":"2017-06","avg":57677.4,"median":null},{"month":"2017-07","avg":57932.5,"median":null},{"month":"2017-08","avg":58281.8,"median":null},{"month":"2017-09","avg":58260.9,"median":null},{"month":"2017-10","avg":58445.9,"median":null},{"month":"2017-11","avg":58751.6,"median":null},{"month":"2017-12","avg":65990.5,"median":null},{"month":"2018-01","avg":67352.2,"median":null},{"month":"2018-02","avg":68622.0,"median":null},{"month":"2018-03","avg":69183.8,"median":null},{"month":"2018-04","avg":69367.3,"median":null},{"month":"2018-05","avg":69443.5,"median":null},{"month":"2018-06","avg":69473.9,"median":null},{"month":"2018-07","avg":69593.1,"median":null},{"month":"2018-08","avg":70238.3,"median":null},{"month":"2018-09","avg":71645.3,"median":null},{"month":"2018-10","avg":72034.7,"median":null},{"month":"2018-11","avg":71972.4,"median":null},{"month":"2018-12","avg":71774.9,"median":null},{"month":"2019-01","avg":81012.9,"median":null},{"month":"2019-02","avg":80602.7,"median":null},{"month":"2019-03","avg":80215.7,"median":null},{"month":"2019-04","avg":79921.1,"median":null},{"month":"2019-05","avg":79761.7,"median":null},{"month":"2019-06","avg":79721.4,"median":null},{"month":"2019-07","avg":79830.2,"median":null},{"month":"2019-08","avg":79972.1,"median":null},{"month":"2019-09","avg":80148.0,"median":null},{"month":"2019-10","avg":80712.1,"median":null},{"month":"2019-11","avg":81357.3,"median":null},{"month":"2019-12","avg":82722.8,"median":null},{"month":"2020-01","avg":87712.8,"median":null},{"month":"2020-02","avg":87718.5,"median":null},{"month":"2020-03","avg":87685.7,"median":null},{"month":"2020-04","avg":87379.1,"median":null},{"month":"2020-05","avg":87074.2,"median":null},{"month":"2020-06","avg":87189.7,"median":null},{"month":"2020-07","avg":88183.4,"median":null},{"month":"2020-08","avg":88621.6,"median":null},{"month":"2020-09","avg":88851.1,"median":null},{"month":"2020-10","avg":88936.8,"median":null},{"month":"2020-11","avg":89026.7,"median":null},{"month":"2020-12","avg":89310.0,"median":null},{"month":"2021-01","avg":89725.4,"median":null},{"month":"2021-02","avg":90382.4,"median":null},{"month":"2021-03","avg":90711.2,"median":null},{"month":"2021-04","avg":91160.4,"median":null},{"month":"2021-05","avg":91712.7,"median":null},{"month":"2021-06","avg":92812.6,"median":null},{"month":"2021-07","avg":110930.0,"median":null},{"month":"2021-08","avg":111925.0,"median":null},{"month":"2021-09","avg":113042.7,"median":null},{"month":"2021-10","avg":114065.9,"median":null},{"month":"2021-11","avg":114828.8,"median":null},{"month":"2021-12","avg":115146.9,"median":null},{"month":"2022-01","avg":115172.1,"median":null},{"month":"2022-02","avg":115084.2,"median":null},{"month":"2022-03","avg":115014.6,"median":null},{"month":"2022-04","avg":115041.6,"median":null},{"month":"2022-05","avg":114880.8,"median":null},{"month":"2022-06","avg":114821.4,"median":null},{"month":"2022-07","avg":114611.6,"median":null},{"month":"2022-08","avg":114161.4,"median":null},{"month":"2022-09","avg":113369.8,"median":null},{"month":"2022-10","avg":112009.5,"median":null},{"month":"2022-11","avg":109816.8,"median":null},{"month":"2022-12","avg":106759.0,"median":null},{"month":"2023-01","avg":104326.7,"median":null},{"month":"2023-02","avg":103261.7,"median":null},{"month":"2023-03","avg":102618.9,"median":null},{"month":"2023-04","avg":102297.7,"median":null},{"month":"2023-05","avg":102500.3,"median":null},{"month":"2023-06","avg":102865.5,"median":null},{"month":"2023-07","avg":103301.5,"median":null},{"month":"2023-08","avg":103977.4,"median":null},{"month":"2023-09","avg":104631.8,"median":null},{"month":"2023-10","avg":105090.7,"median":null},{"month":"2023-11","avg":105259.6,"median":null},{"month":"2023-12","avg":105145.8,"median":null},{"month":"2024-01","avg":105223.4,"median":null},{"month":"2024-02","avg":105092.6,"median":null},{"month":"2024-03","avg":105133.9,"median":null},{"month":"2024-04","avg":105375.2,"median":null},{"month":"2024-05","avg":105697.5,"median":null},{"month":"2024-06","avg":106506.7,"median":null},{"month":"2024-07","avg":108264.8,"median":null},{"month":"2024-08","avg":110159.1918,"median":null},{"month":"2024-09","avg":111352.6047,"median":null},{"month":"2024-10","avg":112037.4045,"median":null},{"month":"2024-11","avg":112463.8226,"median":null},{"month":"2024-12","avg":112648.8905,"median":null},{"month":"2025-01","avg":112746.6238,"median":null},{"month":"2025-02","avg":113344.8824,"median":null},{"month":"2025-03","avg":115110.1378,"median":null},{"month":"2025-04","avg":116633.7022,"median":null},{"month":"2025-05","avg":117718.7393,"median":null},{"month":"2025-06","avg":120554.6708,"median":null},{"month":"2025-07","avg":122449.8331,"median":null},{"month":"2025-08","avg":123236.1092,"median":null},{"month":"2025-09","avg":124148.8953,"median":null},{"month":"2025-10","avg":126373.6514,"median":null},{"month":"2025-11","avg":127590.8979,"median":null},{"month":"2025-12","avg":128942.5521,"median":null}]},"kb":{"schema":"seoul-apt-price-v1","source":"kb","region":"서울","housing_type":"아파트","transaction":"매매","unit":"만원","origin":"KB 발표 수치 인용 보도 기반 초기 5개월 (원본 KB 시계열 파일 미검증)","updated_at":"2026-11-13","source_url":"https://data.kbland.kr/","verification":"SECONDARY_REPORTED_VALUES_NEED_KB_ORIGINAL_CROSSCHECK","rows":[{"month":"2026-06","avg":158311,"median":null},{"month":"2026-07","avg":159490,"median":127853},{"month":"2026-08","avg":160739,"median":129167},{"month":"2026-09","avg":162469,"median":131333},{"month":"2026-10","avg":163546,"median":132167}]}}</script>
+<script id="initial-data" type="application/json">{"reb":{"schema":"seoul-apt-price-v1","source":"reb","region":"서울","housing_type":"아파트","transaction":"매매","unit":"만원","origin":"한국부동산원 R-ONE 전국주택가격동향조사(월간)","source_url":"https://www.reb.or.kr/r-one/portal/stat/easyStatPage/A_2024_00060.do","updated_at":"2026-11-13T09:10:58+00:00","verification":"R_ONE_OFFICIAL_API_KEY_AUTHENTICATED","statistics":{"avg_table_id":"A_2024_00060","median_table_id":"A_2024_00062","seoul_cls_id":"500008"},"rows":[{"month":"2012-01","avg":54095.4,"median":49411.2},{"month":"2012-02","avg":53887.6,"median":49251.0},{"month":"2012-03","avg":53607.9,"median":49150.8},{"month":"2012-04","avg":53240.9,"median":48787.4},{"month":"2012-05","avg":52973.3,"median":48298.8},{"month":"2012-06","avg":52513.1,"median":47710.3},{"month":"2012-07","avg":52112.3,"median":47440.5},{"month":"2012-08","avg":51584.6,"median":46994.7},{"month":"2012-09","avg":51182.3,"median":46486.6},{"month":"2012-10","avg":50821.7,"median":46218.7},{"month":"2012-11","avg":50549.4,"median":45878.6},{"month":"2012-12","avg":49990.0,"median":45539.6},{"month":"2013-01","avg":49618.0,"median":45377.5},{"month":"2013-02","avg":49416.8,"median":45121.1},{"month":"2013-03","avg":49367.5,"median":45077.5},{"month":"2013-04","avg":49449.2,"median":45355.0},{"month":"2013-05","avg":49551.1,"median":45497.8},{"month":"2013-06","avg":49390.8,"median":45318.0},{"month":"2013-07","avg":49068.2,"median":45113.7},{"month":"2013-08","avg":48811.6,"median":44993.1},{"month":"2013-09","avg":48842.8,"median":45008.5},{"month":"2013-10","avg":49051.9,"median":45119.5},{"month":"2013-11","avg":49084.0,"median":45154.6},{"month":"2013-12","avg":49052.4,"median":45169.4},{"month":"2014-01","avg":49099.5,"median":45088.3},{"month":"2014-02","avg":49245.1,"median":45332.0},{"month":"2014-03","avg":49433.8,"median":45581.3},{"month":"2014-04","avg":49447.8,"median":45630.6},{"month":"2014-05","avg":49404.2,"median":45627.7},{"month":"2014-06","avg":49367.3,"median":45561.0},{"month":"2014-07","avg":49365.2,"median":45610.7},{"month":"2014-08","avg":49425.6,"median":45773.1},{"month":"2014-09","avg":49642.5,"median":46185.9},{"month":"2014-10","avg":49845.2,"median":46288.5},{"month":"2014-11","avg":49900.9,"median":46331.4},{"month":"2014-12","avg":49892.7,"median":46283.2},{"month":"2015-01","avg":50045.4,"median":46555.8},{"month":"2015-02","avg":50215.0,"median":46723.6},{"month":"2015-03","avg":50497.9,"median":47185.0},{"month":"2015-04","avg":50868.3,"median":47536.1},{"month":"2015-05","avg":51200.4,"median":47823.5},{"month":"2015-06","avg":51548.1,"median":48239.2},{"month":"2015-07","avg":53753.6,"median":49923.1},{"month":"2015-08","avg":54047.9,"median":50085.1},{"month":"2015-09","avg":54383.3,"median":50517.3},{"month":"2015-10","avg":54715.3,"median":50780.8},{"month":"2015-11","avg":54920.4,"median":51060.6},{"month":"2015-12","avg":55129.9,"median":51297.4},{"month":"2016-01","avg":55134.6,"median":51289.4},{"month":"2016-02","avg":55046.2,"median":51198.3},{"month":"2016-03","avg":55031.3,"median":51221.8},{"month":"2016-04","avg":55093.6,"median":51196.2},{"month":"2016-05","avg":55222.7,"median":51466.7},{"month":"2016-06","avg":55360.3,"median":51563.7},{"month":"2016-07","avg":55572.0,"median":51708.2},{"month":"2016-08","avg":55801.7,"median":51921.4},{"month":"2016-09","avg":55480.0,"median":51781.7},{"month":"2016-10","avg":55931.1,"median":52148.5},{"month":"2016-11","avg":56209.6,"median":52401.4},{"month":"2016-12","avg":56227.8,"median":52374.1},{"month":"2017-01","avg":56202.5,"median":52316.0},{"month":"2017-02","avg":56252.9,"median":52343.8},{"month":"2017-03","avg":56594.6,"median":52457.7},{"month":"2017-04","avg":56774.0,"median":52669.9},{"month":"2017-05","avg":57028.7,"median":52996.3},{"month":"2017-06","avg":57677.4,"median":53732.0},{"month":"2017-07","avg":57932.5,"median":54052.9},{"month":"2017-08","avg":58281.8,"median":54685.0},{"month":"2017-09","avg":58260.9,"median":54670.0},{"month":"2017-10","avg":58445.9,"median":54889.9},{"month":"2017-11","avg":58751.6,"median":55139.7},{"month":"2017-12","avg":65990.5,"median":62583.1},{"month":"2018-01","avg":67352.2,"median":63808.1},{"month":"2018-02","avg":68622.0,"median":65098.9},{"month":"2018-03","avg":69183.8,"median":65671.3},{"month":"2018-04","avg":69367.3,"median":65876.5},{"month":"2018-05","avg":69443.5,"median":66169.0},{"month":"2018-06","avg":69473.9,"median":66403.4},{"month":"2018-07","avg":69593.1,"median":66642.2},{"month":"2018-08","avg":70238.3,"median":67208.2},{"month":"2018-09","avg":71645.3,"median":68517.1},{"month":"2018-10","avg":72034.7,"median":68858.9},{"month":"2018-11","avg":71972.4,"median":68865.2},{"month":"2018-12","avg":71774.9,"median":68749.1},{"month":"2019-01","avg":81012.9,"median":78619.0},{"month":"2019-02","avg":80602.7,"median":78235.1},{"month":"2019-03","avg":80215.7,"median":77798.5},{"month":"2019-04","avg":79921.1,"median":77704.8},{"month":"2019-05","avg":79761.7,"median":77528.2},{"month":"2019-06","avg":79721.4,"median":77418.4},{"month":"2019-07","avg":79830.2,"median":77459.6},{"month":"2019-08","avg":79972.1,"median":77480.4},{"month":"2019-09","avg":80148.0,"median":77600.7},{"month":"2019-10","avg":80712.1,"median":77962.0},{"month":"2019-11","avg":81357.3,"median":78467.4},{"month":"2019-12","avg":82722.8,"median":79757.7},{"month":"2020-01","avg":87712.8,"median":83920.6},{"month":"2020-02","avg":87718.5,"median":83955.1},{"month":"2020-03","avg":87685.7,"median":83937.6},{"month":"2020-04","avg":87379.1,"median":83665.8},{"month":"2020-05","avg":87074.2,"median":83410.1},{"month":"2020-06","avg":87189.7,"median":83541.8},{"month":"2020-07","avg":88183.4,"median":84683.5},{"month":"2020-08","avg":88621.6,"median":85300.9},{"month":"2020-09","avg":88851.1,"median":85592.0},{"month":"2020-10","avg":88936.8,"median":85695.8},{"month":"2020-11","avg":89026.7,"median":85833.9},{"month":"2020-12","avg":89310.0,"median":86223.1},{"month":"2021-01","avg":89725.4,"median":86702.7},{"month":"2021-02","avg":90382.4,"median":87473.8},{"month":"2021-03","avg":90711.2,"median":87687.6},{"month":"2021-04","avg":91160.4,"median":88004.7},{"month":"2021-05","avg":91712.7,"median":88395.9},{"month":"2021-06","avg":92812.6,"median":89519.4},{"month":"2021-07","avg":110930.0,"median":94000.0},{"month":"2021-08","avg":111925.0,"median":94800.0},{"month":"2021-09","avg":113042.7,"median":95700.0},{"month":"2021-10","avg":114065.9,"median":96550.0},{"month":"2021-11","avg":114828.8,"median":97000.0},{"month":"2021-12","avg":115146.9,"median":97100.0},{"month":"2022-01","avg":115172.1,"median":97050.0},{"month":"2022-02","avg":115084.2,"median":97000.0},{"month":"2022-03","avg":115014.6,"median":96950.0},{"month":"2022-04","avg":115041.6,"median":96600.0},{"month":"2022-05","avg":114880.8,"median":96500.0},{"month":"2022-06","avg":114821.4,"median":96300.0},{"month":"2022-07","avg":114611.6,"median":96200.0},{"month":"2022-08","avg":114161.4,"median":95900.0},{"month":"2022-09","avg":113369.8,"median":95100.0},{"month":"2022-10","avg":112009.5,"median":93350.0},{"month":"2022-11","avg":109816.8,"median":91300.0},{"month":"2022-12","avg":106759.0,"median":88300.0},{"month":"2023-01","avg":104326.7,"median":86600.0},{"month":"2023-02","avg":103261.7,"median":85700.0},{"month":"2023-03","avg":102618.9,"median":84900.0},{"month":"2023-04","avg":102297.7,"median":84500.0},{"month":"2023-05","avg":102500.3,"median":84200.0},{"month":"2023-06","avg":102865.5,"median":84200.0},{"month":"2023-07","avg":103301.5,"median":84500.0},{"month":"2023-08","avg":103977.4,"median":84800.0},{"month":"2023-09","avg":104631.8,"median":85100.0},{"month":"2023-10","avg":105090.7,"median":85650.0},{"month":"2023-11","avg":105259.6,"median":85800.0},{"month":"2023-12","avg":105145.8,"median":85700.0},{"month":"2024-01","avg":105223.4,"median":85800.0},{"month":"2024-02","avg":105092.6,"median":85600.0},{"month":"2024-03","avg":105133.9,"median":85600.0},{"month":"2024-04","avg":105375.2,"median":85650.0},{"month":"2024-05","avg":105697.5,"median":85800.0},{"month":"2024-06","avg":106506.7,"median":86000.0},{"month":"2024-07","avg":108264.8,"median":86700.0},{"month":"2024-08","avg":110159.1918,"median":87500.0},{"month":"2024-09","avg":111352.6047,"median":88400.0},{"month":"2024-10","avg":112037.4045,"median":88700.0},{"month":"2024-11","avg":112463.8226,"median":88800.0},{"month":"2024-12","avg":112648.8905,"median":88800.0},{"month":"2025-01","avg":112746.6238,"median":88900.0},{"month":"2025-02","avg":113344.8824,"median":89000.0},{"month":"2025-03","avg":115110.1378,"median":89300.0},{"month":"2025-04","avg":116633.7022,"median":90700.0},{"month":"2025-05","avg":117718.7393,"median":90800.0},{"month":"2025-06","avg":120554.6708,"median":91300.0},{"month":"2025-07","avg":122449.8331,"median":92000.0},{"month":"2025-08","avg":123236.1092,"median":92400.0},{"month":"2025-09","avg":124148.8953,"median":92800.0},{"month":"2025-10","avg":126373.6514,"median":94100.0},{"month":"2025-11","avg":127590.8979,"median":94900.0},{"month":"2025-12","avg":128942.5521,"median":95800.0}]},"kb":{"schema":"seoul-apt-price-v1","source":"kb","region":"서울","housing_type":"아파트","transaction":"매매","unit":"만원","origin":"KB 발표 수치 인용 보도 기반 초기 5개월 (원본 KB 시계열 파일 미검증)","updated_at":"2026-11-13","source_url":"https://data.kbland.kr/","verification":"SECONDARY_REPORTED_VALUES_NEED_KB_ORIGINAL_CROSSCHECK","rows":[{"month":"2026-06","avg":158311,"median":null},{"month":"2026-07","avg":159490,"median":127853},{"month":"2026-08","avg":160739,"median":129167},{"month":"2026-09","avg":162469,"median":131333},{"month":"2026-10","avg":163546,"median":132167}]}}</script>
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id), KR=new Intl.NumberFormat('ko-KR'), series=[
@@ -80,8 +80,7 @@ async function getLatest(){for(const src of ['reb','kb']){try{const response=awa
 setRange();getLatest();
 })();
 </script>
-
-<!-- v1.5 comparison enhancement -->
+<!-- v1.6: Full-document release; interactive comparison with draggable A/B boundaries. -->
 <style>
 #modeButtons [data-mode="growth"]{display:none!important}
 #compareBlock{margin-top:18px;border:1px solid #d8e3f2;border-radius:15px;background:#f8fbff;overflow:hidden}
@@ -101,66 +100,50 @@ setRange();getLatest();
 #compareInner .cmpstat.positive strong{color:#146b65}
 #compareInner .cmpstat.negative strong{color:#b4423e}
 #cmpChartBox{position:relative;width:100%;background:white;border:1px solid #e3e9f3;border-radius:11px;overflow:hidden}
-#cmpSvg{display:block;width:100%;height:auto;min-height:210px}
-#cmpTip{position:absolute;pointer-events:none;top:12px;right:12px;background:#182b47;color:#fff;padding:10px 12px;border-radius:10px;font-size:12px;max-width:230px;box-shadow:0 8px 20px #0002;z-index:3}
+#cmpSvg{display:block;width:100%;height:auto;min-height:210px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:crosshair}
+#cmpSvg.dragging{cursor:ew-resize}
+#cmpTip{position:absolute;pointer-events:none;top:12px;right:12px;background:#182b47;color:#fff;padding:10px 12px;border-radius:10px;font-size:12px;max-width:260px;box-shadow:0 8px 20px #0002;z-index:3}
 #cmpTip[hidden]{display:none}
 #cmpNote{font-size:12px;color:#617188;line-height:1.65;margin-top:9px}
-#cmpReset{border:1px solid #ccd8e9;color:#335d91;background:white;padding:9px 13px;border-radius:9px;cursor:pointer;font-size:12px}
-#cmpMessage{margin:10px 0;color:#956822;font-size:12px}
-@media(max-width:620px){
-#compareInner{padding:3px 12px 13px}
-#compareInner .cmpfields label{min-width:130px}
-#compareInner .cmpstat{min-width:110px;padding:10px}
-#compareInner .cmpstat strong{font-size:15px}
-}
+#cmpReset{border:1px solid #ccd8e9;color:#335d91;background:white;padding:10px 14px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:700}
+#cmpReset:focus-visible,#compareInner select:focus-visible{outline:3px solid #82b7ff;outline-offset:2px}
+#cmpMessage{margin:10px 0;color:#47618a;font-size:12px;min-height:20px;font-weight:650}
+@media(max-width:620px){#compareInner{padding:3px 12px 13px}#compareInner .cmpfields label{min-width:130px}#compareInner .cmpstat{min-width:110px;padding:10px}#compareInner .cmpstat strong{font-size:15px}}
 </style>
 <script>
 (function(){
 'use strict';
-
 var tab=document.querySelector('[data-source="reb"]');
 if(tab)tab.textContent='한국부동산원(REB)';
 var modeArea=document.querySelector('#modeButtons');
 var priceButton=modeArea&&modeArea.querySelector('[data-mode="price"]');
 if(priceButton)priceButton.textContent='가격 추이';
-
 var baseElement=document.querySelector('#initial-data');
 var base=baseElement?JSON.parse(baseElement.textContent):{};
-var datasets={
- reb:base.reb||{rows:[]},
- kb:base.kb||{rows:[]}
-};
-
+var datasets={reb:base.reb||{rows:[]},kb:base.kb||{rows:[]}};
 var allSeries=[
  {id:'reb_avg',src:'reb',field:'avg',name:'한국부동산원(REB) 평균',color:'#3469dd'},
  {id:'reb_median',src:'reb',field:'median',name:'한국부동산원(REB) 중위',color:'#9473c8'},
  {id:'kb_avg',src:'kb',field:'avg',name:'KB 평균',color:'#0a9b88'},
  {id:'kb_median',src:'kb',field:'median',name:'KB 중위',color:'#db9a37'}
 ];
-
 var warning=document.querySelector('#warning');
 if(!warning)return;
-
 var panel=document.createElement('details');
 panel.id='compareBlock';
 panel.innerHTML=
- '<summary>기간별 가격 증감 비교 <span style="font-weight:500;font-size:12px;color:#74849a">두 시점을 선택해 비교</span></summary>'+
+ '<summary>기간별 가격 증감 비교 <span style="font-weight:500;font-size:12px;color:#74849a">두 시점 선택 · 드래그 조정</span></summary>'+
  '<div id="compareInner">'+
- '<p class="cmpintro">0% 기준은 선택한 시작월의 가격입니다. 같은 통계의 두 시점만 비교하며, 서로 다른 기관의 가격을 섞지 않습니다.</p>'+
+ '<p class="cmpintro">시작월 A를 0%로 기준화합니다. 그래프의 A·B 세로선을 잡아 좌우로 드래그하세요. 교차하면 시작/종료가 자동으로 바뀝니다.</p>'+
  '<div class="cmpfields">'+
- '<label>비교 지표<select id="cmpSeries"></select></label>'+
- '<label>시작월 A (0% 기준)<select id="cmpStart"></select></label>'+
- '<label>종료월 B<select id="cmpEnd"></select></label>'+
- '</div>'+
+ '<label>비교 지표<select id="cmpSeries" aria-label="비교할 가격 지표"></select></label>'+
+ '<label>시작월 A · 0% 기준<select id="cmpStart" aria-label="시작월 A"></select></label>'+
+ '<label>종료월 B<select id="cmpEnd" aria-label="종료월 B"></select></label></div>'+
  '<div class="cmpmetrics" id="cmpMetrics" aria-live="polite"></div>'+
- '<div id="cmpChartBox">'+
- '<svg id="cmpSvg" viewBox="0 0 1000 390" role="img" aria-label="선택한 시작월 기준 0% 가격 누적 변화 그래프"></svg>'+
- '<div id="cmpTip" hidden></div></div>'+
- '<p id="cmpMessage" role="status"></p>'+
- '<button id="cmpReset" type="button">그래프에서 다시 두 시점 선택</button>'+
- '<p id="cmpNote">그래프의 두 점을 순서대로 클릭하거나, 위에서 시작월과 종료월을 선택하세요. 가로의 진한 0% 선이 A시점의 가격이며, 아래로 내려가면 감소, 위로 올라가면 증가입니다. 이 변화율은 원자료 가격의 증감이며 공식 매매가격지수 변동률이 아닙니다. 표본 변경에 영향을 받을 수 있습니다.</p>'+
- '</div>';
-
+ '<div id="cmpChartBox"><svg id="cmpSvg" viewBox="0 0 1000 390" role="img" aria-label="두 시점의 누적 가격 변화율. A B 세로선을 좌우로 드래그하여 기간을 조절"></svg><div id="cmpTip" hidden></div></div>'+
+ '<p id="cmpMessage" role="status" aria-live="polite"></p>'+
+ '<button id="cmpReset" type="button">다시 두 시점 선택</button>'+
+ '<p id="cmpNote">진한 가로선이 0% 기준입니다. 그래프 왼쪽은 기준월 대비 누적 변화율(%)입니다. A·B 두 시점이 확정되면 가격 차이(만원)와 누적 변화율(%)을 표시합니다. 표본 기반 평균·중위가격의 변화는 공식 매매가격지수 상승률과 다를 수 있습니다.</p></div>';
 warning.parentNode.insertBefore(panel,warning.nextSibling);
 
 var metric=panel.querySelector('#cmpSeries');
@@ -170,327 +153,169 @@ var svg=panel.querySelector('#cmpSvg');
 var tip=panel.querySelector('#cmpTip');
 var msg=panel.querySelector('#cmpMessage');
 var metrics=panel.querySelector('#cmpMetrics');
-
-var active=null,pick=0,initial=false;
+var resetButton=panel.querySelector('#cmpReset');
+var active=null, observations=[],aMonth=null,bMonth=null,phase='ready',drag=null,chartCoords=null;
 var NS='http://www.w3.org/2000/svg';
-
-function chosenTab(){
- return(document.querySelector('#tabs [aria-selected="true"]')||{}).dataset?.source||'all';
-}
-function pickSeries(){
- var tab=chosenTab();
- return allSeries.filter(function(s){
-  return(tab==='all'||tab===s.src)&&
-   (datasets[s.src].rows||[]).some(function(r){
-    return Number.isFinite(r[s.field]);
-   });
- });
-}
-function monthly(s){
- return(datasets[s.src].rows||[])
-  .filter(function(r){return Number.isFinite(r[s.field]);})
-  .map(function(r){return{month:r.month,value:r[s.field]};})
-  .sort(function(a,b){return a.month.localeCompare(b.month);});
-}
-function getIndex(m){
- var p=m.split('-').map(Number);
- return p[0]*12+p[1]-1;
-}
-function nice(v){
- return(v>0?'+':'')+v.toFixed(1)+'%';
-}
-function asMoney(v){
- return(v/10000).toLocaleString('ko-KR',{maximumFractionDigits:3})+'억원';
-}
-function setOptions(select,arr,selected){
- select.replaceChildren();
- arr.forEach(function(m){
-  var o=document.createElement('option');
-  o.value=m;
-  o.textContent=m.replace('-','.');
-  select.appendChild(o);
- });
- if(arr.includes(selected))select.value=selected;
-}
-function E(tag,attrs,text){
- var n=document.createElementNS(NS,tag);
- Object.entries(attrs||{}).forEach(function(e){
-  n.setAttribute(e[0],e[1]);
- });
- if(text!==undefined)n.textContent=text;
- svg.appendChild(n);
- return n;
-}
-function tickStep(raw){
- if(raw<=0)return 1;
- var p=Math.pow(10,Math.floor(Math.log10(raw)));
- var f=raw/p;
- return(f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;
-}
-function drawChart(data,a,b){
- svg.replaceChildren();
- tip.hidden=true;
- if(!data.length)return;
- var m=new Map(data.map(function(r){return[r.month,r.value];}));
- if(!m.has(a)||!m.has(b))return;
-
- var baseValue=m.get(a);
- var changes=data.map(function(r){return(r.value/baseValue-1)*100;});
- var rawMin=Math.min(0,...changes);
- var rawMax=Math.max(0,...changes);
- var step=tickStep(Math.max(rawMax-rawMin,0.5)/5);
- var lo=Math.floor((rawMin-step*.25)/step)*step;
- var hi=Math.ceil((rawMax+step*.25)/step)*step;
+function chosenTab(){return(document.querySelector('#tabs [aria-selected="true"]')||{}).dataset?.source||'all';}
+function pickSeries(){var tab=chosenTab();return allSeries.filter(function(s){return(tab==='all'||tab===s.src)&&(datasets[s.src].rows||[]).some(function(r){return Number.isFinite(r[s.field]);});});}
+function monthly(s){return(datasets[s.src].rows||[]).filter(function(r){return Number.isFinite(r[s.field]);}).map(function(r){return{month:r.month,value:r[s.field]};}).sort(function(a,b){return a.month.localeCompare(b.month);});}
+function monthIndex(m){var p=m.split('-').map(Number);return p[0]*12+p[1]-1;}
+function nice(v){return(v>0?'+':'')+v.toFixed(1)+'%';}
+function asMoney(v){return(v/10000).toLocaleString('ko-KR',{minimumFractionDigits:0,maximumFractionDigits:3})+'억원';}
+function setOptions(el,arr,selected){el.replaceChildren();arr.forEach(function(m){var o=document.createElement('option');o.value=m;o.textContent=m.replace('-','.');el.appendChild(o);});if(selected!==null&&arr.includes(selected))el.value=selected;else if(!arr.length)el.value='';}
+function E(tag,attrs,text){var n=document.createElementNS(NS,tag);Object.entries(attrs||{}).forEach(function(e){n.setAttribute(e[0],e[1]);});if(text!==undefined)n.textContent=text;svg.appendChild(n);return n;}
+function tickStep(raw){if(raw<=0)return 1;var p=Math.pow(10,Math.floor(Math.log10(raw))),f=raw/p;return(f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*p;}
+function byMonth(m){return observations.find(function(x){return x.month===m;})||null;}
+function currentBaseline(){var x=byMonth(aMonth);return x?x.value:observations[0]?.value;}
+function nearestMonth(e){if(!chartCoords||!observations.length)return null;var rect=svg.getBoundingClientRect();var xx=(e.clientX-rect.left)/rect.width*1000;var mn=Math.max(chartCoords.L,Math.min(chartCoords.R,xx));return observations.reduce(function(best,r){return Math.abs(chartCoords.fx(r.month)-mn)<Math.abs(chartCoords.fx(best.month)-mn)?r:best;},observations[0]).month;}
+function pointerX(e){var rect=svg.getBoundingClientRect();return(e.clientX-rect.left)/rect.width*1000;}
+function handleNear(e){if(aMonth==null||bMonth==null||!chartCoords)return null;var px=pointerX(e);var da=Math.abs(px-chartCoords.fx(aMonth)),db=Math.abs(px-chartCoords.fx(bMonth));var threshold=Math.max(12,Math.min(22,svg.getBoundingClientRect().width>560?17:26));if(Math.min(da,db)>threshold)return null;return db<=da?'B':'A';}
+function drawChart(){
+ svg.replaceChildren();tip.hidden=true;
+ if(!observations.length){chartCoords=null;return;}
+ var reference=currentBaseline();
+ var changes=observations.map(function(r){return(r.value/reference-1)*100;});
+ var min=Math.min(0,...changes),max=Math.max(0,...changes);
+ var step=tickStep(Math.max(max-min,0.5)/5);
+ var lo=Math.floor((min-step*.3)/step)*step,hi=Math.ceil((max+step*.3)/step)*step;
  if(lo===hi){lo-=step;hi+=step;}
-
- var L=83,R=967,T=38,B=334;
- var x0=getIndex(data[0].month);
- var x1=getIndex(data[data.length-1].month);
- var fx=function(month){
-  return L+(getIndex(month)-x0)/Math.max(1,x1-x0)*(R-L);
- };
- var fy=function(n){
-  return B-(n-lo)/(hi-lo)*(B-T);
- };
-
- if(a<=b){
-  E('rect',{
-   x:fx(a),y:T,
-   width:Math.max(1,fx(b)-fx(a)),
-   height:B-T,fill:'#e8f0fc'
-  });
+ var L=84,R=966,T=39,B=334;
+ var x0=monthIndex(observations[0].month),x1=monthIndex(observations[observations.length-1].month);
+ var fx=function(month){return L+(monthIndex(month)-x0)/Math.max(1,x1-x0)*(R-L);};
+ var fy=function(n){return B-(n-lo)/(hi-lo)*(B-T);};
+ chartCoords={L:L,R:R,T:T,B:B,fx:fx,fy:fy};
+ if(aMonth!=null&&bMonth!=null){
+  E('rect',{x:fx(aMonth),y:T,width:Math.max(1,fx(bMonth)-fx(aMonth)),height:B-T,fill:'#e7efff'});
  }
-
- for(var tick=Math.round(lo/step);tick<=Math.round(hi/step);tick++){
-  var v=tick*step,y=fy(v);
-  var zero=Math.abs(v)<step/100;
-  E('line',{
-   x1:L,x2:R,y1:y,y2:y,
-   stroke:zero?'#40516d':'#e3eaf4',
-   'stroke-width':zero?2.8:1
-  });
-  E('text',{
-   x:L-12,y:y+4,'text-anchor':'end',
-   fill:zero?'#283a55':'#6d7d94',
-   'font-size':zero?15:13,
-   'font-weight':zero?700:400
-  },Math.abs(v)<.00001?'0%':nice(v));
+ var minTick=Math.ceil(lo/step),maxTick=Math.floor(hi/step);
+ for(var ti=minTick;ti<=maxTick;ti++){
+  var v=ti*step,y=fy(v),zero=Math.abs(v)<step/100;
+  E('line',{x1:L,x2:R,y1:y,y2:y,stroke:zero?'#263951':'#e1e8f1','stroke-width':zero?3:1});
+  E('text',{x:L-12,y:y+5,'text-anchor':'end',fill:zero?'#142b46':'#63758f','font-size':zero?15:13,'font-weight':zero?700:500},Math.abs(v)<.0000001?'0%':nice(v));
  }
-
- var nTicks=Math.min(6,data.length);
+ var nTicks=Math.min(6,observations.length);
  for(var i=0;i<nTicks;i++){
-  var p=data[Math.round(i*(data.length-1)/Math.max(1,nTicks-1))];
-  E('text',{
-   x:fx(p.month),y:365,
-   'text-anchor':'middle',
-   fill:'#6f8096','font-size':12
-  },p.month.replace('-','.'));
+  var p=observations[Math.round(i*(observations.length-1)/Math.max(1,nTicks-1))];
+  E('text',{x:fx(p.month),y:365,'text-anchor':'middle',fill:'#6f8096','font-size':12},p.month.replace('-','.'));
  }
-
- var segments=[],prev=-999;
- function flush(){
-  if(segments.length>1){
-   E('polyline',{
-    points:segments.join(' '),
-    stroke:active.color,'stroke-width':3.3,
-    fill:'none','stroke-linecap':'round',
-    'stroke-linejoin':'round'
-   });
-  }else if(segments.length===1){
-   var xy=segments[0].split(',');
-   E('circle',{cx:xy[0],cy:xy[1],r:4,fill:active.color});
-  }
-  segments=[];
- }
- data.forEach(function(r){
-  var n=getIndex(r.month);
-  if(n-prev>1)flush();
-  segments.push(fx(r.month)+','+fy((r.value/baseValue-1)*100));
-  prev=n;
+ var segment=[],prev=-999;
+ function flush(){if(segment.length>1)E('polyline',{points:segment.join(' '),stroke:active.color,'stroke-width':3.4,fill:'none','stroke-linecap':'round','stroke-linejoin':'round'});else if(segment.length===1){var c=segment[0].split(',');E('circle',{cx:c[0],cy:c[1],r:4,fill:active.color});}segment=[];}
+ observations.forEach(function(r){var month=monthIndex(r.month);if(month-prev>1)flush();segment.push(fx(r.month)+','+fy((r.value/reference-1)*100));prev=month;});flush();
+ [{m:aMonth,name:'A',color:'#3469dd'},{m:bMonth,name:'B',color:'#d38b31'}].forEach(function(mark){
+  if(mark.m===null)return;
+  var x=fx(mark.m),r=byMonth(mark.m),percent=(r.value/reference-1)*100;
+  E('line',{x1:x,x2:x,y1:T,y2:B,stroke:mark.color,'stroke-width':2.5,'stroke-dasharray':'7 5'});
+  E('circle',{cx:x,cy:fy(percent),r:10,fill:mark.color,stroke:'white','stroke-width':2.8});
+  E('rect',{x:Math.max(L,x-19),y:T-18,width:38,height:23,rx:7,fill:mark.color});
+  E('text',{x:Math.max(L+19,x),y:T-2,'text-anchor':'middle',fill:'white','font-size':14,'font-weight':750},mark.name);
  });
- flush();
-
- [a,b].forEach(function(month,idx){
-  var x=fx(month);
-  var pct=(m.get(month)/baseValue-1)*100;
-  E('line',{
-   x1:x,x2:x,y1:T,y2:B,
-   stroke:idx?'#d88935':'#3469dd',
-   'stroke-width':1.8,'stroke-dasharray':'5 5'
-  });
-  E('circle',{
-   cx:x,cy:fy(pct),r:7,
-   fill:idx?'#d88935':'#3469dd',
-   stroke:'#fff','stroke-width':2
-  });
-  E('text',{
-   x:Math.max(L+10,Math.min(x,R-10)),
-   y:T+15,'text-anchor':'middle',
-   fill:idx?'#bf6c27':'#315fba',
-   'font-size':13,'font-weight':700
-  },idx?'B':'A');
- });
-
- var cover=E('rect',{
-  x:L,y:T,width:R-L,height:B-T,
-  fill:'transparent',style:'cursor:crosshair'
- });
-
- function nearest(e){
-  var rect=svg.getBoundingClientRect();
-  var xp=(e.clientX-rect.left)/rect.width*1000;
-  return data.reduce(function(curr,r){
-   return Math.abs(fx(r.month)-xp)<Math.abs(fx(curr.month)-xp)?r:curr;
-  },data[0]);
- }
- cover.addEventListener('pointermove',function(e){
-  var r=nearest(e);
-  tip.textContent=r.month+' · '+asMoney(r.value)+
-   ' · A 기준 '+nice((r.value/baseValue-1)*100);
-  tip.hidden=false;
- });
- cover.addEventListener('pointerleave',function(){
-  tip.hidden=true;
- });
- cover.addEventListener('click',function(e){
-  var clicked=nearest(e).month;
-  if(pick===0){
-   start.value=clicked;
-   pick=1;
-   msg.textContent='A = '+clicked+
-    ' 선택됨. 이제 종료할 B 지점을 클릭하세요.';
-  }else{
-   end.value=clicked;
-   if(start.value>end.value){
-    var temp=start.value;
-    start.value=end.value;
-    end.value=temp;
-   }
-   pick=0;
-   msg.textContent='A부터 B까지의 증감이 계산되었습니다.';
-  }
-  update();
- });
+ E('rect',{x:L,y:T,width:R-L,height:B-T,fill:'transparent'});
 }
-function update(){
- if(!panel.open)return;
- var options=pickSeries();
- var selected=options.find(function(s){
-  return s.id===metric.value;
- })||options[0];
-
- if(!selected){
-  metrics.textContent='해당 출처에 표시 가능한 가격 데이터가 없습니다.';
-  svg.replaceChildren();
-  return;
- }
-
- if(!active||active.id!==selected.id){
-  active=selected;
-  setOptions(metric,options.map(function(s){return s.id;}),selected.id);
-  Array.from(metric.options).forEach(function(o){
-   o.textContent=options.find(function(s){
-    return s.id===o.value;
-   }).name;
-  });
-  initial=false;
- }
-
- var rangeStart=document.querySelector('#from')?.value||'0000-01';
- var rangeEnd=document.querySelector('#to')?.value||'9999-12';
- var d=monthly(active).filter(function(r){
-  return r.month>=rangeStart&&r.month<=rangeEnd;
- });
- var months=d.map(function(r){return r.month;});
-
- if(!months.length){
-  svg.replaceChildren();
-  metrics.textContent='이 지표는 선택 기간에 자료가 없습니다.';
-  start.replaceChildren();
-  end.replaceChildren();
-  return;
- }
-
- var a=initial?start.value:months[0];
- var b=initial?end.value:months[months.length-1];
- setOptions(start,months,a);
- setOptions(end,months,b);
- if(start.value>end.value)end.value=start.value;
- initial=true;
-
- var am=d.find(function(r){return r.month===start.value;});
- var bm=d.find(function(r){return r.month===end.value;});
- var diff=bm.value-am.value;
- var change=(bm.value/am.value-1)*100;
-
- metrics.innerHTML=
-  '<div class="cmpstat"><small>시작 A · '+start.value+
-  '</small><strong>'+asMoney(am.value)+'</strong></div>'+
-  '<div class="cmpstat"><small>종료 B · '+end.value+
-  '</small><strong>'+asMoney(bm.value)+'</strong></div>'+
-  '<div class="cmpstat '+(diff>0?'positive':diff<0?'negative':'')+
-  '"><small>가격 증감</small><strong>'+
-  (diff>0?'+':'')+Math.round(diff).toLocaleString('ko-KR')+
-  '만원</strong></div>'+
-  '<div class="cmpstat '+(change>0?'positive':change<0?'negative':'')+
-  '"><small>누적 변화율</small><strong>'+
-  nice(change)+'</strong></div>';
-
- drawChart(d,start.value,end.value);
+function updateSummary(){
+ var entries=observations.map(function(x){return x.month;});
+ var a=byMonth(aMonth),b=byMonth(bMonth);
+ setOptions(start,entries,aMonth);setOptions(end,entries,bMonth);
+ start.disabled=!entries.length;end.disabled=!entries.length;
+ if(!entries.length){metrics.textContent='이 지표는 선택 기간에 자료가 없습니다.';return;}
+ if(!a){metrics.innerHTML='<div class="cmpstat"><small>시작월 A</small><strong>그래프에서 선택하세요</strong></div><div class="cmpstat"><small>종료월 B</small><strong>선택 대기</strong></div>';return;}
+ if(!b){metrics.innerHTML='<div class="cmpstat"><small>시작월 A · '+aMonth+'</small><strong>'+asMoney(a.value)+'</strong></div><div class="cmpstat"><small>종료월 B</small><strong>그래프에서 선택하세요</strong></div>';return;}
+ var diff=b.value-a.value,pct=(b.value/a.value-1)*100;
+ metrics.innerHTML='<div class="cmpstat"><small>시작 A · '+aMonth+'</small><strong>'+asMoney(a.value)+'</strong></div>'+
+ '<div class="cmpstat"><small>종료 B · '+bMonth+'</small><strong>'+asMoney(b.value)+'</strong></div>'+
+ '<div class="cmpstat '+(diff>0?'positive':diff<0?'negative':'')+'"><small>가격 증감</small><strong>'+(diff>0?'+':'')+Math.round(diff).toLocaleString('ko-KR')+'만원</strong></div>'+
+ '<div class="cmpstat '+(pct>0?'positive':pct<0?'negative':'')+'"><small>누적 변화율</small><strong>'+nice(pct)+'</strong></div>';
 }
+function redraw(){updateSummary();drawChart();}
 function refresh(){
- initial=false;
- active=null;
- pick=0;
- msg.textContent='';
- update();
+ if(!panel.open)return;
+ var choices=pickSeries(),old=metric.value;
+ metric.replaceChildren();
+ choices.forEach(function(s){var o=document.createElement('option');o.value=s.id;o.textContent=s.name;metric.appendChild(o);});
+ var selected=choices.find(function(s){return s.id===old;})||choices[0];
+ active=selected||null;observations=[];drag=null;svg.classList.remove('dragging');
+ if(!active){metrics.textContent='현재 출처에는 조회 가능한 가격 데이터가 없습니다.';svg.replaceChildren();return;}
+ metric.value=active.id;
+ var from=document.querySelector('#from')?.value||'0000-01',to=document.querySelector('#to')?.value||'9999-12';
+ observations=monthly(active).filter(function(r){return r.month>=from&&r.month<=to;});
+ aMonth=observations.length?observations[0].month:null;
+ bMonth=observations.length?observations[observations.length-1].month:null;
+ phase='ready';msg.textContent=observations.length?'A와 B의 세로선 또는 원형 점을 잡고 좌우로 드래그해보세요.':'';
+ redraw();
 }
-
-metric.addEventListener('change',function(){
- active=null;initial=false;update();
-});
-start.addEventListener('change',function(){
- initial=true;pick=0;update();
-});
-end.addEventListener('change',function(){
- initial=true;pick=0;update();
-});
-panel.querySelector('#cmpReset').addEventListener('click',function(){
- pick=0;
- msg.textContent='먼저 그래프에서 시작점 A를 클릭하고, 그다음 종료점 B를 클릭하세요.';
-});
-panel.addEventListener('toggle',function(){
- if(panel.open)refresh();
-});
-document.querySelector('#tabs')?.addEventListener('click',function(){
- setTimeout(refresh,0);
-});
-document.querySelector('#periods')?.addEventListener('click',function(){
- setTimeout(refresh,0);
-});
-['from','to'].forEach(function(id){
- document.getElementById(id)?.addEventListener('change',function(){
-  setTimeout(refresh,0);
- });
-});
-
-Promise.all(['reb','kb'].map(function(src){
- return fetch('./data/'+src+'.json?ts='+Date.now(),{cache:'no-store'})
-  .then(function(r){
-   if(!r.ok)throw new Error('HTTP');
-   return r.json();
-  })
-  .then(function(doc){
-   if(doc.source===src&&Array.isArray(doc.rows)&&doc.rows.every(function(r){
-    return /^\d{4}-\d\d$/.test(r.month)&&
-     (r.avg===null||Number.isFinite(r.avg))&&
-     (r.median===null||Number.isFinite(r.median));
-   }))datasets[src]=doc;
-  }).catch(function(){});
-})).then(function(){
- if(panel.open)refresh();
-});
+function showTip(e){
+ var month=nearestMonth(e),r=byMonth(month);
+ if(!r)return;
+ tip.textContent=r.month+' · '+asMoney(r.value)+' · A 기준 '+nice((r.value/currentBaseline()-1)*100)+(drag?' · 드래그 중':'');
+ tip.hidden=false;
+}
+function resetSelection(){
+ if(!observations.length)return;
+ drag=null;svg.classList.remove('dragging');
+ aMonth=null;bMonth=null;phase='pickA';
+ msg.textContent='선택 초기화 완료. 그래프에서 시작 시점 A를 클릭하세요.';
+ redraw();
+}
+function onPointerDown(e){
+ if(e.button!==undefined&&e.button!==0)return;
+ if(!panel.open||!active||!observations.length)return;
+ var month=nearestMonth(e);if(!month)return;
+ var handle=phase==='ready'?handleNear(e):null;
+ drag={id:e.pointerId,handle:handle,startX:e.clientX,lastMonth:month,moved:false};
+ try{svg.setPointerCapture(e.pointerId);}catch(_){}
+ if(handle){svg.classList.add('dragging');msg.textContent=handle+' 지점을 좌우로 드래그하세요. 교차하면 A·B 역할이 자동 변경됩니다.';}
+ e.preventDefault();
+}
+function onPointerMove(e){
+ if(!panel.open||!observations.length)return;
+ if(!drag||drag.id!==e.pointerId){if(phase==='ready'){var near=handleNear(e);svg.style.cursor=near?'ew-resize':'crosshair';}showTip(e);return;}
+ var month=nearestMonth(e);if(!month)return;
+ var dist=Math.abs(e.clientX-drag.startX);
+ if(dist>4)drag.moved=true;
+ if(drag.handle&&drag.moved&&month!==drag.lastMonth){
+  if(drag.handle==='A'){
+   if(bMonth!==null&&month>bMonth){aMonth=bMonth;bMonth=month;drag.handle='B';}
+   else aMonth=month;
+  }else{
+   if(aMonth!==null&&month<aMonth){bMonth=aMonth;aMonth=month;drag.handle='A';}
+   else bMonth=month;
+  }
+  drag.lastMonth=month;
+  msg.textContent='이동 중 · A '+aMonth+' → B '+bMonth+' (드래그를 놓으면 확정)';
+  redraw();
+ }
+ showTip(e);
+}
+function onPointerUp(e){
+ if(!drag||drag.id!==e.pointerId)return;
+ var d=drag;drag=null;
+ svg.classList.remove('dragging');
+ try{if(svg.hasPointerCapture(e.pointerId))svg.releasePointerCapture(e.pointerId);}catch(_){}
+ var month=nearestMonth(e)||d.lastMonth;
+ if(d.handle&&d.moved){phase='ready';msg.textContent='드래그 완료 · '+aMonth+' ~ '+bMonth+' 구간의 증감이 계산되었습니다.';redraw();return;}
+ if(d.handle){msg.textContent='A 또는 B 지점을 좌우로 드래그해 기간을 조정할 수 있습니다.';return;}
+ if(phase==='pickA'||phase==='ready'){
+  aMonth=month;bMonth=null;phase='pickB';msg.textContent='A = '+month+' 선택. 그래프에서 종료할 B 지점을 클릭하세요.';
+ }else if(phase==='pickB'){
+  if(month<aMonth){bMonth=aMonth;aMonth=month;}else bMonth=month;
+  phase='ready';msg.textContent='비교 완료. A 또는 B를 드래그해서 다시 조정할 수 있습니다.';
+ }
+ redraw();
+}
+function onPointerCancel(e){if(!drag||drag.id!==e.pointerId)return;drag=null;svg.classList.remove('dragging');msg.textContent='드래그가 중단되었습니다. 기존 선택은 유지됩니다.';}
+svg.addEventListener('pointerdown',onPointerDown);
+svg.addEventListener('pointermove',onPointerMove);
+svg.addEventListener('pointerup',onPointerUp);
+svg.addEventListener('pointercancel',onPointerCancel);
+svg.addEventListener('pointerleave',function(){if(!drag)tip.hidden=true;});
+resetButton.addEventListener('click',resetSelection);
+metric.addEventListener('change',function(){refresh();});
+start.addEventListener('change',function(){if(!observations.length)return;aMonth=start.value;if(bMonth===null){phase='pickB';}else if(aMonth>bMonth){bMonth=aMonth;phase='ready';}else phase='ready';msg.textContent='시작월 선택을 적용했습니다.';redraw();});
+end.addEventListener('change',function(){if(!observations.length)return;if(aMonth===null)aMonth=observations[0].month;bMonth=end.value;if(aMonth>bMonth){aMonth=bMonth;}phase='ready';msg.textContent='종료월 선택을 적용했습니다.';redraw();});
+panel.addEventListener('toggle',function(){if(panel.open)refresh();});
+document.querySelector('#tabs')?.addEventListener('click',function(){setTimeout(refresh,0);});
+document.querySelector('#periods')?.addEventListener('click',function(){setTimeout(refresh,0);});
+['from','to'].forEach(function(id){document.getElementById(id)?.addEventListener('change',function(){setTimeout(refresh,0);});});
+Promise.all(['reb','kb'].map(function(src){return fetch('./data/'+src+'.json?ts='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP');return r.json();}).then(function(doc){if(doc.source===src&&Array.isArray(doc.rows)&&doc.rows.every(function(r){return /^\d{4}-\d\d$/.test(r.month)&&(r.avg===null||Number.isFinite(r.avg))&&(r.median===null||Number.isFinite(r.median));}))datasets[src]=doc;}).catch(function(){});})).then(function(){if(panel.open)refresh();});
 })();
 </script>
 </body></html>
-
