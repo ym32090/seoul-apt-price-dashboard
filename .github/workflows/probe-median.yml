@@ -1,0 +1,35 @@
+# Manual verification only. No commits, deployments, or scheduled runs.
+name: Verify REB median price (read only)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-median:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout existing code
+        uses: actions/checkout@v4
+      - name: Query official median candidate A_2024_00062
+        env:
+          REB_API_KEY: ${{ secrets.REB_API_KEY }}
+        run: |
+          python - <<'PY'
+          import os
+          from scripts.update_reb import fetch_pages, to_prices
+
+          key = os.environ.get('REB_API_KEY', '')
+          if not key:
+              raise SystemExit('REB_API_KEY secret is missing')
+          table = 'A_2024_00062'
+          prices = to_prices(fetch_pages(key, table, '2024', '2025'), table)
+          if len(prices) < 6:
+              raise SystemExit('Fewer than six validated monthly values')
+          print(f'READ_ONLY_PASS table={table} months={len(prices)}'
+                f' period={min(prices)}..{max(prices)} unit=10000KRW')
+          print('No repository files changed or deployed')
+          PY
