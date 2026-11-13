@@ -5,6 +5,11 @@
 name: Refresh official REB price series
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'data/kb.json'
   workflow_dispatch:
   schedule:
     # 07:40 UTC = 16:40 Korea time, days 15-25 each month.
@@ -64,7 +69,7 @@ jobs:
           fi
 
       - name: Prepare public static site
-        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         run: |
           mkdir -p _site/data
           cp index.html _site/index.html
@@ -72,18 +77,18 @@ jobs:
           touch _site/.nojekyll
 
       - name: Configure Pages
-        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         uses: actions/configure-pages@v5
 
       - name: Upload public website artifact
-        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         uses: actions/upload-pages-artifact@v4
         with:
           path: _site
 
   deploy-pages:
     needs: refresh-reb
-    if: needs.refresh-reb.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+    if: needs.refresh-reb.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
