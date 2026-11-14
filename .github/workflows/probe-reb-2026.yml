@@ -1,0 +1,90 @@
+
+# Complete standalone diagnostic. Manual execution only. No repository writes.
+name: Diagnose REB 2026 price coverage (read only)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect-2026:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out source code without write permissions
+        uses: actions/checkout@v4
+      - name: Inspect official 2025 and 2026 responses
+        env:
+          REB_API_KEY: ${{ secrets.REB_API_KEY }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from urllib.parse import urlencode
+          from urllib.request import Request, urlopen
+          from scripts.update_reb import fetch_pages, to_prices, parse_page
+
+          key = os.environ.get('REB_API_KEY', '')
+          if not key.strip():
+              raise SystemExit('Missing GitHub Actions secret REB_API_KEY')
+
+          endpoint = 'https://www.reb.or.kr/r-one/openapi/SttsApiTblData.do'
+          tables = [('Average', 'A_2024_00060'), ('Median', 'A_2024_00062')]
+          report = ['# Official REB price data: read-only coverage audit', '',
+                    'No repository files were edited. This workflow does not deploy the website.', '']
+          for label, table in tables:
+              report.append('## ' + label + ' / ' + table)
+              for year in ('2025', '2026'):
+                  try:
+                      rows = fetch_pages(key, table, year, year)
+                      validated = to_prices(rows, table)
+                      months = sorted(m for m in validated if m.startswith(year + '-'))
+                      if not months:
+                          report.append(f'- {year} strict Seoul query: 0 validated months')
+                      else:
+                          report.append(f'- {year} strict Seoul query: {len(months)} months ({months[0]} to {months[-1]})')
+                  except Exception as exc:
+                      # Do NOT print exception text or the full request URL: the API key is secret.
+                      report.append(f'- {year} strict Seoul query: unavailable ({type(exc).__name__})')
+
+              # Metadata probe only: omit the city/item filter and inspect 2026 code candidates.
+              params = {
+                  'KEY': key, 'Type': 'json', 'STATBL_ID': table,
+                  'DTACYCLE_CD': 'MM', 'START_WRTTIME': '2026',
+                  'END_WRTTIME': '2026', 'pIndex': 1, 'pSize': 30,
+              }
+              try:
+                  request = Request(endpoint + '?' + urlencode(params),
+                                    headers={'Accept': 'application/json'})
+                  with urlopen(request, timeout=30) as response:
+                      payload = json.load(response)
+                  total, sample = parse_page(payload)
+                  report.append(f'- 2026 table-wide API: total={total}, sampled={len(sample)}')
+                  candidates = sorted({
+                      (str(r.get('CLS_ID', '')), str(r.get('CLS_NM', '')),
+                       str(r.get('ITM_ID', '')), str(r.get('ITM_NM', '')))
+                      for r in sample if r.get('CLS_ID') is not None
+                  })
+                  for cls_id, cls_nm, itm_id, itm_nm in candidates[:8]:
+                      # Only publicly defined statistical code metadata, never request URLs/keys.
+                      report.append(f'  - cls={cls_id} ({cls_nm}); item={itm_id} ({itm_nm})')
+              except Exception as exc:
+                  report.append(f'- 2026 table-wide API metadata: unavailable ({type(exc).__name__})')
+              report.append('')
+
+          report += [
+              'Interpretation:',
+              '- 2026 strict rows found: investigate why the production collector omitted them.',
+              '- 2026 only in table-wide rows: investigate changed CLS_ID / ITM_ID.',
+              '- No 2026 rows in either query: source/API publication status remains unconfirmed.',
+              '- Official price indices and transaction-price averages are NOT substitutes.',
+          ]
+          result = '\n'.join(report)
+          print(result)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as fp:
+              fp.write(result + '\n')
+          PY
+    
