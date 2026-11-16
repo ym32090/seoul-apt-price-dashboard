@@ -1,0 +1,155 @@
+# Manual evidence-based API diagnostic only. Does NOT edit data/reb.json or deploy Pages.
+name: Audit R-ONE 2026 and rent prices (read only)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-rone:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Audit authentic R-ONE API statuses without revealing the key
+        env:
+          REB_API_KEY: ${{ secrets.REB_API_KEY }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import re
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+
+          KEY = os.environ.get('REB_API_KEY', '')
+          if not KEY.strip():
+              raise SystemExit('Missing REB_API_KEY. Set a private GitHub Actions Secret.')
+
+          ROOT = 'https://www.reb.or.kr/r-one/openapi/'
+          records = ['# REB R-ONE API deep diagnostic (READ ONLY)', '',
+                     'Source code and site were NOT modified or deployed.',
+                     'No request URLs, authentication keys, or individual prices are logged.', '']
+
+          def safe_code(value):
+              return re.sub(r'[^A-Za-z0-9_-]', '', str(value or 'UNKNOWN'))[:45]
+
+          def call(service, params):
+              args = dict(params)
+              args['KEY'] = KEY
+              args['Type'] = 'json'
+              # Never print the assembled URL; it contains the private API key.
+              url = ROOT + service + '.do?' + urllib.parse.urlencode(args)
+              request = urllib.request.Request(
+                  url, headers={'Accept': 'application/json', 'User-Agent': 'SeoulAptReadonlyAudit/1.0'})
+              try:
+                  with urllib.request.urlopen(request, timeout=35) as response:
+                      payload = json.load(response)
+              except urllib.error.HTTPError as err:
+                  return {'status': 'HTTP_' + str(err.code), 'total': None, 'rows': []}
+              except urllib.error.URLError:
+                  return {'status': 'NETWORK_ERROR', 'total': None, 'rows': []}
+              except (ValueError, UnicodeError):
+                  return {'status': 'NON_JSON_RESPONSE', 'total': None, 'rows': []}
+              if not isinstance(payload, dict):
+                  return {'status': 'UNEXPECTED_JSON', 'total': None, 'rows': []}
+              if payload.get('RESULT'):
+                  result = payload['RESULT']
+                  code = result.get('CODE', 'TOP_LEVEL_ERROR') if isinstance(result, dict) else 'TOP_LEVEL_ERROR'
+                  return {'status': safe_code(code), 'total': None, 'rows': []}
+              blocks = payload.get(service)
+              if not isinstance(blocks, list):
+                  return {'status': 'MISSING_SERVICE_ARRAY', 'total': None, 'rows': []}
+              total, rows, code = None, [], 'INFO-000'
+              for block in blocks:
+                  for head in block.get('head', []):
+                      if 'list_total_count' in head:
+                          try: total = int(head['list_total_count'])
+                          except (ValueError, TypeError): pass
+                      if 'RESULT' in head:
+                          result = head['RESULT']
+                          if isinstance(result, dict): code = safe_code(result.get('CODE'))
+                  rows.extend(block.get('row') or [])
+              return {'status': safe_code(code), 'total': total, 'rows': rows}
+
+          def info(label, result):
+              periods = sorted({str(r.get('WRTTIME_IDTFR_ID', '')) for r in result['rows']
+                                if str(r.get('WRTTIME_IDTFR_ID', '')).isdigit()})
+              rowcount = len(result['rows'])
+              first, last = (periods[0], periods[-1]) if periods else ('NONE', 'NONE')
+              records.append(f'- {label}: code={result["status"]}, total={result["total"]}, '
+                             f'page_rows={rowcount}, first={first}, last={last}')
+
+          sale = [('SALE_AVG', 'A_2024_00060'), ('SALE_MEDIAN', 'A_2024_00062')]
+          rent = [('RENT_AVG_CANDIDATE', 'A_2024_00192')]
+          cases = [
+              ('historical', '2000', '2026'),
+              ('year_2025', '2025', '2025'),
+              ('month_2025', '202501', '202512'),
+              ('year_2026', '2026', '2026'),
+              ('month_2026', '202601', '202610'),
+              ('from_2026_only', '2026', None),
+          ]
+
+          for name, table in sale + rent:
+              records += ['', '## ' + name + ' / ' + table]
+              meta = call('SttsApiTbl', {'STATBL_ID': table, 'pIndex': 1, 'pSize': 4})
+              records.append(f'- CATALOG_CODE={meta["status"]}, catalog_rows={len(meta["rows"])}')
+              for row in meta['rows'][:3]:
+                  records.append(f'  - title={str(row.get("STATBL_NM", ""))[:80]}; '
+                                 f'data_start={safe_code(row.get("DATA_START_YY"))}; '
+                                 f'data_end={safe_code(row.get("DATA_END_YY"))}; '
+                                 f'open={safe_code(row.get("OPEN_STATE"))}')
+              for label, start, end in cases:
+                  p = {'STATBL_ID': table, 'DTACYCLE_CD': 'MM',
+                       'CLS_ID': '500008', 'ITM_ID': '100001',
+                       'START_WRTTIME': start, 'pIndex': 1, 'pSize': 1000}
+                  if end is not None: p['END_WRTTIME'] = end
+                  result = call('SttsApiTblData', p)
+                  info(label, result)
+                  if result['rows'] and label in ('month_2026', 'historical'):
+                      sample = result['rows'][-1]
+                      records.append('  - LAST_ROW_CODES: CLS_ID=' + safe_code(sample.get('CLS_ID')) +
+                                     ' CLS_NM=' + str(sample.get('CLS_NM', ''))[:35] +
+                                     ' ITM_ID=' + safe_code(sample.get('ITM_ID')) +
+                                     ' UI_NM=' + str(sample.get('UI_NM', ''))[:30])
+
+          records += ['', '## Discover official R-ONE apartment rent median tables']
+          candidates = {}
+          for page in range(1, 26):
+              result = call('SttsApiTbl', {'pIndex': page, 'pSize': 1000})
+              if result['status'] != 'INFO-000':
+                  records.append(f'- catalogue page {page} returned {result["status"]}; scan stopped')
+                  break
+              if not result['rows']:
+                  records.append('- empty catalogue page; scan stopped')
+                  break
+              for row in result['rows']:
+                  title = str(row.get('STATBL_NM', '')).replace(' ', '')
+                  if ('전세' in title and '아파트' in title and
+                      ('평균가격' in title or '중위가격' in title or '평균전세' in title or '중위전세' in title)):
+                      table_id = safe_code(row.get('STATBL_ID'))
+                      candidates[table_id] = (str(row.get('STATBL_NM', ''))[:100],
+                                              safe_code(row.get('DATA_END_YY')))
+              if result['total'] is not None and page*1000 >= result['total']:
+                  break
+          for ident, (title, end) in sorted(candidates.items())[:40]:
+              records.append(f'- {ident}: {title} (metadata last year={end})')
+          if not candidates:
+              records.append('- No candidate was confirmed by this catalogue scan.')
+
+          records += ['', '## Interpretation',
+              'Non-INFO-000 codes identify the actual R-ONE API response outcome.',
+              'A year-only query failure with month-range success indicates parameter formatting.',
+              'No 2026 rows with successful full-history query indicates absent rows in that table, not a universal end of REB surveys.',
+              'Do not mix the separate transaction-price index/area-price series into survey-based per-home prices.',
+              'A rent table ID is only a candidate until its Seoul classification, item, unit and coverage validate.']
+
+          report = '\n'.join(records)
+          print(report)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as f:
+              f.write(report+'\n')
+          PY
