@@ -1,5 +1,4 @@
-# Manual READ ONLY diagnostic; replaces the previous crash-prone audit.
-# No automatic schedule, repository commits, or Pages deployment.
+# Complete replacement: read-only audit, no commits, no Pages deployment.
 name: Audit R-ONE 2026 and rent prices (read only)
 
 on:
@@ -13,141 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - name: Inspect R-ONE transport and statistical coverage safely
+      - name: Checkout code (read only)
+        uses: actions/checkout@v4
+      - name: Python environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Inspect exact catalog IDs and full-history coverage safely
         env:
           REB_API_KEY: ${{ secrets.REB_API_KEY }}
-        shell: bash
-        run: |
-          python - <<'PY'
-          import http.client
-          import json
-          import os
-          import re
-          import socket
-          import ssl
-          import time
-          import urllib.error
-          import urllib.parse
-          import urllib.request
-
-          KEY = os.environ.get('REB_API_KEY', '').strip()
-          if not KEY:
-              raise SystemExit('Missing existing GitHub Actions secret REB_API_KEY')
-          BASE = 'https://www.reb.or.kr/r-one/openapi/'
-          checks = [
-              ('SALE_AVG', 'A_2024_00060'),
-              ('SALE_MEDIAN', 'A_2024_00062'),
-              ('RENT_AVG_CANDIDATE', 'A_2024_00192'),
-          ]
-          records = [
-              '# REB transport-safe audit (READ ONLY)', '',
-              'No raw API URLs, authentication keys or prices are included.',
-              'No repository file updates or deployment performed.', '',
-          ]
-          seen_states = []
-
-          def safe(value):
-              return re.sub(r'[^A-Za-z0-9_-]', '', str(value or 'none'))[:48]
-
-          def query(table, year=None, catalog=False):
-              params = {'KEY': KEY, 'Type': 'json', 'STATBL_ID': table,
-                        'pIndex': 1, 'pSize': 60}
-              service = 'SttsApiTbl' if catalog else 'SttsApiTblData'
-              if not catalog:
-                  params.update({'DTACYCLE_CD': 'MM', 'CLS_ID': '500008',
-                                 'ITM_ID': '100001', 'START_WRTTIME': year,
-                                 'END_WRTTIME': year})
-              url = BASE + service + '.do?' + urllib.parse.urlencode(params)
-              request = urllib.request.Request(
-                  url, headers={'Accept': 'application/json',
-                                'User-Agent': 'SeoulApartmentDashboard/1.2'})
-              try:
-                  with urllib.request.urlopen(request, timeout=18) as response:
-                      body = json.load(response)
-              except urllib.error.HTTPError as exc:
-                  return {'state': 'HTTP_' + str(exc.code), 'rows': [], 'total': None}
-              except http.client.RemoteDisconnected:
-                  return {'state': 'REMOTE_DISCONNECTED', 'rows': [], 'total': None}
-              except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
-                  return {'state': 'CONNECTION_ABORTED', 'rows': [], 'total': None}
-              except (urllib.error.URLError, TimeoutError, socket.timeout,
-                      ssl.SSLError, OSError):
-                  return {'state': 'NETWORK_ERROR', 'rows': [], 'total': None}
-              except (ValueError, UnicodeError, json.JSONDecodeError):
-                  return {'state': 'INVALID_JSON', 'rows': [], 'total': None}
-              if not isinstance(body, dict):
-                  return {'state': 'INVALID_SCHEMA', 'rows': [], 'total': None}
-              if body.get('RESULT'):
-                  obj = body['RESULT']
-                  return {'state': safe(obj.get('CODE') if isinstance(obj, dict)
-                                        else 'TOP_LEVEL_ERROR'), 'rows': [], 'total': None}
-              blocks = body.get(service)
-              if not isinstance(blocks, list):
-                  return {'state': 'NO_SERVICE_ARRAY', 'rows': [], 'total': None}
-              total, rows, code = None, [], 'INFO-000'
-              for block in blocks:
-                  if not isinstance(block, dict):
-                      continue
-                  for head in block.get('head', []):
-                      if isinstance(head, dict):
-                          if 'list_total_count' in head:
-                              try:
-                                  total = int(head['list_total_count'])
-                              except (ValueError, TypeError):
-                                  pass
-                          if isinstance(head.get('RESULT'), dict):
-                              code = safe(head['RESULT'].get('CODE'))
-                  rows += [r for r in block.get('row', []) if isinstance(r, dict)]
-              return {'state': code, 'rows': rows, 'total': total}
-
-          for label, table in checks:
-              records.append('## ' + label + ' (' + table + ')')
-              for kind, year in [('catalog', None), ('2025', '2025'),
-                                  ('2026', '2026')]:
-                  result = query(table, year, catalog=(kind == 'catalog'))
-                  code = result['state']
-                  seen_states.append(code)
-                  if kind == 'catalog':
-                      metadata = result['rows'][:1]
-                      suffix = ''
-                      if metadata:
-                          r = metadata[0]
-                          suffix = (' metadata_end=' + safe(r.get('DATA_END_YY')) +
-                                    ' title_has_rent=' + str('전세' in str(r.get('STATBL_NM', ''))))
-                      records.append('- catalog: status=' + code + suffix)
-                  else:
-                      months = sorted({str(r.get('WRTTIME_IDTFR_ID', ''))
-                                       for r in result['rows']
-                                       if re.fullmatch(r'\d{6}', str(r.get('WRTTIME_IDTFR_ID', '')))})
-                      records.append('- ' + kind + ': status=' + code +
-                                     ' total=' + str(result['total']) +
-                                     ' sample_rows=' + str(len(result['rows'])) +
-                                     ' first=' + (months[0] if months else 'none') +
-                                     ' last=' + (months[-1] if months else 'none'))
-                  time.sleep(0.75)  # low-impact sequential inspection; no retry storm
-              records.append('')
-
-          network = {'REMOTE_DISCONNECTED', 'CONNECTION_ABORTED', 'NETWORK_ERROR'}
-          if any(v in network for v in seen_states):
-              status = 'INCONCLUSIVE_TRANSPORT_ERRORS'
-              print('::warning::R-ONE closed/refused at least one connection; no missing-2026 conclusion')
-          elif all(v == 'INFO-000' for v in seen_states):
-              status = 'RESPONSES_RECEIVED_REVIEW_COVERAGE'
-          else:
-              status = 'INCONCLUSIVE_API_CODES'
-          records.insert(4, '**AUDIT_STATUS: ' + status + '**')
-          records += [
-              '', '## Interpretation',
-              'REMOTE_DISCONNECTED means no HTTP response; NOT missing statistical data.',
-              'A returned INFO-000 with no 2026 records is evidence only for this table/filter.',
-              'Check official ITEM/CLS metadata before reusing rent table codes.',
-              'A catalog DATA_END_YY may not equal the latest published observation.',
-              'Survey prices and transaction-price indices are different statistics.',
-          ]
-          summary = '\n'.join(records) + '\n'
-          print(summary)
-          out = os.environ.get('GITHUB_STEP_SUMMARY')
-          if out:
-              with open(out, 'a', encoding='utf-8') as fp:
-                  fp.write(summary)
-          PY
+        run: python scripts/audit_reb_prices.py
