@@ -205,11 +205,75 @@ def build_document(avg, median=None, median_table_id=None):
     }
 
 
+def next_end_year(today=None):
+    """R-ONE END_WRTTIME is exclusive for year-based monthly price queries.
+
+    Authenticated evidence from run 44115427668: 2000..2026 ends at 2025-12;
+    2000..2027 includes 2026-01 through 2026-10 for both sale tables.
+    """
+    if today is None:
+        today = dt.datetime.now()
+    return str(today.year + 1)
+
+
+def guard_existing_observations(previous, document):
+    """Refuse loss or silent rewriting of previously published REB observations.
+
+    Historical revisions may be legitimate, but require independent review.
+    New calendar months must contain both mean and median if both existed.
+    """
+    if previous.get('source') != 'reb' or previous.get('schema') != SCHEMA:
+        raise ValueError('기존 REB 파일 출처·스키마 불일치: 덮어쓰기 중단')
+    old_rows = previous.get('rows')
+    new_rows = document.get('rows')
+    if not isinstance(old_rows, list) or not isinstance(new_rows, list) or not old_rows:
+        raise ValueError('기존 REB 행이 없거나 유효하지 않음: 덮어쓰기 중단')
+    old_map = {}
+    new_map = {}
+    for target, rows in ((old_map, old_rows), (new_map, new_rows)):
+        for row in rows:
+            if not isinstance(row, dict) or not isinstance(row.get('month'), str):
+                raise ValueError('REB 행 구조 오류: 덮어쓰기 중단')
+            m = row['month']
+            if m in target:
+                raise ValueError('REB 중복 기준월: 덮어쓰기 중단')
+            target[m] = row
+    for month, old in old_map.items():
+        new = new_map.get(month)
+        if new is None:
+            raise ValueError('기존 기준월 소실: ' + month)
+        for column in ('avg', 'median'):
+            existing = old.get(column)
+            candidate = new.get(column)
+            if existing is not None and candidate != existing:
+                raise ValueError('과거 가격 변경·누락 감지: ' + month + ' ' + column)
+    old_months = sorted(old_map)
+    new_months = sorted(new_map)
+    if new_months[0] != old_months[0] or new_months[-1] < old_months[-1]:
+        raise ValueError('REB 전체 시계열 역행 감지: 덮어쓰기 중단')
+    # Do not silently append a month without a verified second price series.
+    have_both = all(old_map[m].get('median') is not None for m in old_months)
+    for month in new_months:
+        if month not in old_map and (new_map[month].get('avg') is None or
+                                     (have_both and new_map[month].get('median') is None)):
+            raise ValueError('신규 월 평균·중위 한쪽 누락: ' + month)
+    # Gaps across the appended months are not accepted. Existing history
+    # is preserved even if past public releases contained missing months.
+    last = old_months[-1]
+    last_index = int(last[:4]) * 12 + int(last[5:]) - 1
+    for month in (m for m in new_months if m > last):
+        this_index = int(month[:4]) * 12 + int(month[5:]) - 1
+        if this_index != last_index + 1:
+            raise ValueError('신규 월 연속성 실패: ' + last + ' → ' + month)
+        last_index = this_index
+        last = month
+
+
 def main():
     p = argparse.ArgumentParser(description="한국부동산원 공식 R-ONE 시계열 JSON 갱신")
     p.add_argument("--out", type=Path, default=Path(__file__).resolve().parents[1] / "data/reb.json")
     p.add_argument("--start", default="2000")
-    p.add_argument("--end", default=str(dt.datetime.now().year))
+    p.add_argument("--end", default=next_end_year(), help="R-ONE 종료 연도는 배타적입니다. 현재 연도+1을 사용합니다")
     p.add_argument("--median-stat-id", default=os.environ.get("REB_MEDIAN_STATBL_ID", ""))
     args = p.parse_args()
     key = os.environ.get("REB_API_KEY", "")
@@ -223,18 +287,20 @@ def main():
     else:
         print("주의: 중위가격 공식 STATBL_ID를 검증하지 못해 평균값만 갱신합니다")
     document = build_document(avg, med, median_stat_id)
-    # If the same price series is already stored, retain the original updated_at.
-    # A scheduled check must not create an artificial data update merely by running.
     if args.out.exists():
         try:
             previous = json.loads(args.out.read_text(encoding='utf-8'))
-            if (previous.get('source') == 'reb' and previous.get('rows') == document['rows']
-                    and previous.get('statistics') == document['statistics']
-                    and previous.get('verification') == document['verification']):
-                print('공식 자료 변동 없음: 기존 데이터 보존 (추가 커밋 불필요)')
-                return
-        except (ValueError, OSError, TypeError):
-            pass
+        except (ValueError, OSError, TypeError) as exc:
+            raise ValueError('기존 REB 파일을 읽지 못해 자동 덮어쓰기 중단') from exc
+        guard_existing_observations(previous, document)
+    # If the same price series is already stored, retain the original updated_at.
+    # A scheduled check must not create an artificial data update merely by running.
+    if args.out.exists():
+        if (previous.get('source') == 'reb' and previous.get('rows') == document['rows']
+                and previous.get('statistics') == document['statistics']
+                and previous.get('verification') == document['verification']):
+            print('공식 자료 변동 없음: 기존 데이터 보존 (추가 커밋 불필요)')
+            return
     args.out.parent.mkdir(parents=True, exist_ok=True)
     tmp = args.out.with_suffix(".tmp")
     tmp.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
