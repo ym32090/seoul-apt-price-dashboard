@@ -7,7 +7,7 @@
   "unit": "만원",
   "origin": "한국부동산원 R-ONE 전국주택가격동향조사(월간)",
   "source_url": "https://www.reb.or.kr/r-one/portal/stat/easyStatPage/A_2024_00060.do",
-  "updated_at": "2026-11-13T09:10:58+00:00",
+  "updated_at": "2026-11-17T16:11:08+00:00",
   "verification": "R_ONE_OFFICIAL_API_KEY_AUTHENTICATED",
   "statistics": {
     "avg_table_id": "A_2024_00060",
@@ -854,6 +854,56 @@
       "month": "2025-12",
       "avg": 128942.5521,
       "median": 95800.0
+    },
+    {
+      "month": "2026-01",
+      "avg": 130393.6949,
+      "median": 97100.0
+    },
+    {
+      "month": "2026-02",
+      "avg": 131145.5995,
+      "median": 98900.0
+    },
+    {
+      "month": "2026-03",
+      "avg": 131218.6886,
+      "median": 99700.0
+    },
+    {
+      "month": "2026-04",
+      "avg": 131629.0368,
+      "median": 100700.0
+    },
+    {
+      "month": "2026-05",
+      "avg": 132979.7551,
+      "median": 102200.0
+    },
+    {
+      "month": "2026-06",
+      "avg": 134668.8663,
+      "median": 104000.0
+    },
+    {
+      "month": "2026-07",
+      "avg": 136213.5625,
+      "median": 105500.0
+    },
+    {
+      "month": "2026-08",
+      "avg": 136988.9262,
+      "median": 107100.0
+    },
+    {
+      "month": "2026-09",
+      "avg": 137006.7187,
+      "median": 108600.0
+    },
+    {
+      "month": "2026-10",
+      "avg": 136861.7631,
+      "median": 110500.0
     }
   ]
 }
