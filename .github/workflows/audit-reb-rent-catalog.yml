@@ -1,0 +1,24 @@
+# Manual-only authenticated official R-ONE metadata audit. No writes/deployments.
+name: Audit R-ONE rental table identities (read only)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit-reb-rent:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check out metadata audit (read only)
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Inspect official survey rental catalog and field codes
+        env:
+          REB_API_KEY: ${{ secrets.REB_API_KEY }}
+        run: python scripts/audit_reb_rent_catalog.py
